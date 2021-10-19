@@ -1,40 +1,35 @@
 #region MigraDoc - Creating Documents on the Fly
-//
-// Authors:
-//   Klaus Potzesny
+
+// Authors: Klaus Potzesny
 //
 // Copyright (c) 2001-2017 empira Software GmbH, Cologne Area (Germany)
 //
-// http://www.pdfsharp.com
-// http://www.migradoc.com
-// http://sourceforge.net/projects/pdfsharp
+// http://www.pdfsharp.com http://www.migradoc.com http://sourceforge.net/projects/pdfsharp
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-// DEALINGS IN THE SOFTWARE.
-#endregion
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#endregion MigraDoc - Creating Documents on the Fly
 
 using System;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering.Resources;
-using PdfSharp.Pdf;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 
 namespace MigraDoc.Rendering
 {
@@ -54,16 +49,20 @@ namespace MigraDoc.Rendering
         /// <summary>
         /// Initializes a new instance of the <see cref="PdfDocumentRenderer"/> class.
         /// </summary>
-        /// <param name="unicode">If true Unicode encoding is used for all text. If false, WinAnsi encoding is used.</param>
+        /// <param name="unicode">
+        /// If true Unicode encoding is used for all text. If false, WinAnsi encoding is used.
+        /// </param>
         public PdfDocumentRenderer(bool unicode)
         {
             _unicode = unicode;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PdfDocumentRenderer" /> class.
+        /// Initializes a new instance of the <see cref="PdfDocumentRenderer"/> class.
         /// </summary>
-        /// <param name="unicode">If true Unicode encoding is used for all text. If false, WinAnsi encoding is used.</param>
+        /// <param name="unicode">
+        /// If true Unicode encoding is used for all text. If false, WinAnsi encoding is used.
+        /// </param>
         /// <param name="fontEmbedding">Obsolete parameter.</param>
         [Obsolete("Must not specify an embedding option anymore.")]
         public PdfDocumentRenderer(bool unicode, PdfFontEmbedding fontEmbedding)
@@ -76,9 +75,13 @@ namespace MigraDoc.Rendering
         /// </summary>
         public bool Unicode
         {
-            get { return _unicode; }
+            get
+            {
+                return _unicode;
+            }
         }
-        readonly bool _unicode;
+
+        private readonly bool _unicode;
 
         /// <summary>
         /// Gets or sets the language.
@@ -86,10 +89,17 @@ namespace MigraDoc.Rendering
         /// <value>The language.</value>
         public string Language
         {
-            get { return _language; }
-            set { _language = value; }
+            get
+            {
+                return _language;
+            }
+            set
+            {
+                _language = value;
+            }
         }
-        string _language = String.Empty;
+
+        private string _language = String.Empty;
 
         /// <summary>
         /// Set the MigraDoc document to be rendered by this printer.
@@ -103,14 +113,15 @@ namespace MigraDoc.Rendering
                 _document = value;
             }
         }
-        Document _document;
+
+        private Document _document;
 
         /// <summary>
         /// Gets or sets a document renderer.
         /// </summary>
         /// <remarks>
-        /// A document renderer is automatically created and prepared
-        /// when printing before this property was set.
+        /// A document renderer is automatically created and prepared when printing before this
+        /// property was set.
         /// </remarks>
         public DocumentRenderer DocumentRenderer
         {
@@ -120,16 +131,20 @@ namespace MigraDoc.Rendering
                     PrepareDocumentRenderer();
                 return _documentRenderer;
             }
-            set { _documentRenderer = value; }
+            set
+            {
+                _documentRenderer = value;
+            }
         }
-        DocumentRenderer _documentRenderer;
 
-        void PrepareDocumentRenderer()
+        private DocumentRenderer _documentRenderer;
+
+        private void PrepareDocumentRenderer()
         {
             PrepareDocumentRenderer(false);
         }
 
-        void PrepareDocumentRenderer(bool prepareCompletely)
+        private void PrepareDocumentRenderer(bool prepareCompletely)
         {
             if (_document == null)
 #if !NETFX_CORE
@@ -195,7 +210,10 @@ namespace MigraDoc.Rendering
         /// </summary>
         public int PageCount
         {
-            get { return _documentRenderer.FormattedDocument.PageCount; }
+            get
+            {
+                return _documentRenderer.FormattedDocument.PageCount;
+            }
         }
 
         /// <summary>
@@ -243,15 +261,15 @@ namespace MigraDoc.Rendering
                 _pdfDocument = CreatePdfDocument();
 
             _documentRenderer._printDate = DateTime.Now;
-            for (int pageNr = startPage; pageNr <= endPage; ++pageNr)
+            for (var pageNr = startPage; pageNr <= endPage; ++pageNr)
             {
-                PdfPage pdfPage = _pdfDocument.AddPage();
-                PageInfo pageInfo = _documentRenderer.FormattedDocument.GetPageInfo(pageNr);
+                var pdfPage = _pdfDocument.AddPage();
+                var pageInfo = _documentRenderer.FormattedDocument.GetPageInfo(pageNr);
                 pdfPage.Width = pageInfo.Width;
                 pdfPage.Height = pageInfo.Height;
                 pdfPage.Orientation = pageInfo.Orientation;
 
-                using (XGraphics gfx = XGraphics.FromPdfPage(pdfPage))
+                using (var gfx = XGraphics.FromPdfPage(pdfPage))
                 {
                     gfx.MUH = _unicode ? PdfFontEncoding.Unicode : PdfFontEncoding.WinAnsi;
                     _documentRenderer.RenderPage(gfx, pageNr);
@@ -264,21 +282,37 @@ namespace MigraDoc.Rendering
         /// </summary>
         public string WorkingDirectory
         {
-            get { return _workingDirectory; }
-            set { _workingDirectory = value; }
+            get
+            {
+                return _workingDirectory;
+            }
+            set
+            {
+                _workingDirectory = value;
+            }
         }
-        string _workingDirectory;
+
+        private string _workingDirectory;
 
         /// <summary>
         /// Gets or sets the PDF document to render on.
         /// </summary>
-        /// <remarks>A PDF document in memory is automatically created when printing before this property was set.</remarks>
+        /// <remarks>
+        /// A PDF document in memory is automatically created when printing before this property was set.
+        /// </remarks>
         public PdfDocument PdfDocument
         {
-            get { return _pdfDocument; }
-            set { _pdfDocument = value; }
+            get
+            {
+                return _pdfDocument;
+            }
+            set
+            {
+                _pdfDocument = value;
+            }
         }
-        PdfDocument _pdfDocument;
+
+        private PdfDocument _pdfDocument;
 
         /// <summary>
         /// Writes document information like author and subject to the PDF document.
@@ -287,8 +321,8 @@ namespace MigraDoc.Rendering
         {
             if (!_document.IsNull("Info"))
             {
-                DocumentInfo docInfo = _document.Info;
-                PdfDocumentInformation pdfInfo = _pdfDocument.Info;
+                var docInfo = _document.Info;
+                var pdfInfo = _pdfDocument.Info;
 
                 if (!docInfo.IsNull("Author"))
                     pdfInfo.Author = docInfo.Author;
@@ -307,9 +341,9 @@ namespace MigraDoc.Rendering
         /// <summary>
         /// Creates a new PDF document.
         /// </summary>
-        PdfDocument CreatePdfDocument()
+        private PdfDocument CreatePdfDocument()
         {
-            PdfDocument document = new PdfDocument();
+            var document = new PdfDocument();
             document.Info.Creator = "damienbod";
             if (!String.IsNullOrEmpty(_language))
                 document.Language = _language;

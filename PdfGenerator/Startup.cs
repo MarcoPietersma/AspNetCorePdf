@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using Macaw.Pdf.Documents.CWD;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,21 +11,21 @@ namespace Macaw.Pdf
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            IServiceCollection services = builder.Services;
+            var services = builder.Services;
 
             services.AddScoped<IPdfSharpService, PdfSharpService>();
-            services.AddScoped<IMigraDocService, MigraDocService>();
+            services.AddScoped<IMigraDocService<SomeReport>, CWDMigraDocService<SomeReport>>();
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            FunctionsHostBuilderContext context = builder.GetContext();
+            var context = builder.GetContext();
 
-            IConfigurationBuilder configBuilder = builder.ConfigurationBuilder
+            var configBuilder = builder.ConfigurationBuilder
                 .SetBasePath(context.ApplicationRootPath)
                 .AddJsonFile("local.settings.json", optional: true, reloadOnChange: false);
 
-            IConfigurationRoot config = configBuilder.Build();
+            var config = configBuilder.Build();
         }
     }
 }

@@ -1,0 +1,10 @@
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\bin\Debug\netstandard2.1\Macaw.Pdf.Model.deps.json
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\bin\Debug\netstandard2.1\Macaw.Pdf.Model.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\bin\Debug\netstandard2.1\Macaw.Pdf.Model.pdb
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.csproj.AssemblyReference.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.GeneratedMSBuildEditorConfig.editorconfig
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.AssemblyInfoInputs.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.AssemblyInfo.cs
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.csproj.CoreCompileInputs.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Model\obj\Debug\netstandard2.1\Macaw.Pdf.Model.pdb

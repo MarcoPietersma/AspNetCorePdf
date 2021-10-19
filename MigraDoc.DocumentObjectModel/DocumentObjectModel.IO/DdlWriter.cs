@@ -1,34 +1,27 @@
 #region MigraDoc - Creating Documents on the Fly
-//
-// Authors:
-//   Stefan Lange
-//   Klaus Potzesny
-//   David Stephensen
+
+// Authors: Stefan Lange Klaus Potzesny David Stephensen
 //
 // Copyright (c) 2001-2017 empira Software GmbH, Cologne Area (Germany)
 //
-// http://www.pdfsharp.com
-// http://www.migradoc.com
-// http://sourceforge.net/projects/pdfsharp
+// http://www.pdfsharp.com http://www.migradoc.com http://sourceforge.net/projects/pdfsharp
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-// DEALINGS IN THE SOFTWARE.
-#endregion
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#endregion MigraDoc - Creating Documents on the Fly
 
 using System.IO;
 using System.Text;
@@ -50,6 +43,7 @@ namespace MigraDoc.DocumentObjectModel.IO
         }
 
 #if !NETFX_CORE
+
         /// <summary>
         /// Initializes a new instance of the DdlWriter class with the specified filename.
         /// </summary>
@@ -58,6 +52,7 @@ namespace MigraDoc.DocumentObjectModel.IO
             _writer = new StreamWriter(filename, false, Encoding.UTF8);
             _serializer = new Serializer(_writer);
         }
+
 #endif
 
         /// <summary>
@@ -95,8 +90,14 @@ namespace MigraDoc.DocumentObjectModel.IO
         /// </summary>
         public int Indent
         {
-            get { return _serializer.Indent; }
-            set { _serializer.Indent = value; }
+            get
+            {
+                return _serializer.Indent;
+            }
+            set
+            {
+                _serializer.Indent = value;
+            }
         }
 
         /// <summary>
@@ -104,8 +105,14 @@ namespace MigraDoc.DocumentObjectModel.IO
         /// </summary>
         public int InitialIndent
         {
-            get { return _serializer.InitialIndent; }
-            set { _serializer.InitialIndent = value; }
+            get
+            {
+                return _serializer.InitialIndent;
+            }
+            set
+            {
+                _serializer.InitialIndent = value;
+            }
         }
 
         /// <summary>
@@ -143,11 +150,12 @@ namespace MigraDoc.DocumentObjectModel.IO
         }
 
         /// <summary>
-        /// Writes a DocumentObject type object to string. Indent a new block by indent + initialIndent characters.
+        /// Writes a DocumentObject type object to string. Indent a new block by indent +
+        /// initialIndent characters.
         /// </summary>
         public static string WriteToString(DocumentObject docObject, int indent, int initialIndent)
         {
-            StringBuilder strBuilder = new StringBuilder();
+            var strBuilder = new StringBuilder();
             StringWriter writer = null;
             DdlWriter wrt = null;
             try
@@ -194,12 +202,12 @@ namespace MigraDoc.DocumentObjectModel.IO
         }
 
         /// <summary>
-        /// Writes a DocumentObjectCollection type object to string. Indent a new block by
-        /// indent + initialIndent characters.
+        /// Writes a DocumentObjectCollection type object to string. Indent a new block by indent +
+        /// initialIndent characters.
         /// </summary>
         public static string WriteToString(DocumentObjectCollection docObjectContainer, int indent, int initialIndent)
         {
-            StringBuilder strBuilder = new StringBuilder();
+            var strBuilder = new StringBuilder();
             StringWriter writer = null;
             DdlWriter wrt = null;
             try
@@ -245,9 +253,28 @@ namespace MigraDoc.DocumentObjectModel.IO
             WriteToFile(docObject, filename, indent, 0);
         }
 
-        /// <summary>
-        /// Writes a DocumentObject type object to a DDL file. Indent a new block by indent + initialIndent characters.
-        /// </summary>
+        public static Stream WriteToStream(DocumentObject docObject, int indent = 0, int initialIndent = 0)
+        {
+            DdlWriter wrt = null;
+            var ms = new MemoryStream();
+            try
+            {
+                wrt = new DdlWriter(ms);
+                wrt.Indent = indent;
+                wrt.InitialIndent = initialIndent;
+
+                wrt.WriteDocument(docObject);
+            }
+            finally
+            {
+                if (wrt != null)
+                    wrt.Close();
+            }
+
+            ms.Position = 0;
+            return ms;
+        }
+
         public static void WriteToFile(DocumentObject docObject, string filename, int indent, int initialIndent)
         {
             DdlWriter wrt = null;
@@ -305,7 +332,7 @@ namespace MigraDoc.DocumentObjectModel.IO
             }
         }
 
-        StreamWriter _writer;
-        Serializer _serializer;
+        private StreamWriter _writer;
+        private Serializer _serializer;
     }
 }

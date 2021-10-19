@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GLijJ6KgvcmSIT3dNYTQF0alY/7axfnAgSGwOs6W3IvkE1wnSZuVF7KWAlxFsPKCGOeSwbHi6NbXb9UxA2kKSg==",
+  "success": true,
+  "projectFilePath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Documents.CWD\\Macaw.Pdf.Documents.CWD.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\marcop\\.nuget\\packages\\system.drawing.common\\4.5.0\\system.drawing.common.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

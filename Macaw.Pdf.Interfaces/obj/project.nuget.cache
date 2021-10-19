@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "egtdbMcwmYFwureT2MreDMP9+3nd3Bh91L4NSgnOXDyfzAxU5ZpZjgHcnRqEbO4RqV5P9TfPaRivug79MKs+wA==",
+  "dgSpecHash": "Q0JET3dPD+iE0WytXlLzkP+jXUCTa4kXWUzDHHxTkP4jQnlWtBDG8s/abP2bvwspsyD9D2S0xJj0tGfOg+xi9w==",
   "success": true,
   "projectFilePath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\marcop\\.nuget\\packages\\system.drawing.common\\4.5.0\\system.drawing.common.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

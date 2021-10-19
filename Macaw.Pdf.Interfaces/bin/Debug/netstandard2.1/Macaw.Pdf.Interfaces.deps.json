@@ -1,0 +1,66 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "Macaw.Pdf.Interfaces/1.0.0": {
+        "dependencies": {
+          "Macaw.Pdf.Model": "1.0.0",
+          "MigraDoc.DocumentObjectModel": "3.0.0"
+        },
+        "runtime": {
+          "Macaw.Pdf.Interfaces.dll": {}
+        }
+      },
+      "System.Drawing.Common/4.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        }
+      },
+      "Macaw.Pdf.Model/1.0.0": {
+        "runtime": {
+          "Macaw.Pdf.Model.dll": {}
+        }
+      },
+      "MigraDoc.DocumentObjectModel/3.0.0": {
+        "dependencies": {
+          "System.Drawing.Common": "4.5.0"
+        },
+        "runtime": {
+          "MigraDoc.DocumentObjectModel.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Macaw.Pdf.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Drawing.Common/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AiJFxxVPdeITstiRS5aAu8+8Dpf5NawTMoapZ53Gfirml24p7HIfhjmCRxdXnmmf3IUA3AX3CcW7G73CjWxW/Q==",
+      "path": "system.drawing.common/4.5.0",
+      "hashPath": "system.drawing.common.4.5.0.nupkg.sha512"
+    },
+    "Macaw.Pdf.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MigraDoc.DocumentObjectModel/3.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

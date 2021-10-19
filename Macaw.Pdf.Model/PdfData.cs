@@ -2,7 +2,7 @@
 
 namespace Macaw.Pdf.Model
 {
-    public class PdfData
+    public abstract class PdfData : IPdfData
     {
         public string CreatedBy
         {

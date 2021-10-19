@@ -1,0 +1,271 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETStandard,Version=v2.1": {
+      "System.Drawing.Common/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.Drawing.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {}
+        }
+      },
+      "Macaw.Pdf.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Macaw.Pdf.Model": "1.0.0",
+          "MigraDoc.DocumentObjectModel": "3.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Macaw.Pdf.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Macaw.Pdf.Interfaces.dll": {}
+        }
+      },
+      "Macaw.Pdf.Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Macaw.Pdf.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Macaw.Pdf.Model.dll": {}
+        }
+      },
+      "Macaw.Pdf.ProviderService/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Macaw.Pdf.Interfaces": "1.0.0",
+          "Macaw.Pdf.Model": "1.0.0",
+          "MigraDoc.DocumentObjectModel": "3.0.0",
+          "MigraDoc.Rendering": "3.0.0",
+          "PdfSharp": "3.0.0",
+          "PdfSharp.Charting": "3.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Macaw.Pdf.ProviderService.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Macaw.Pdf.ProviderService.dll": {}
+        }
+      },
+      "MigraDoc.DocumentObjectModel/3.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "System.Drawing.Common": "4.5.0"
+        },
+        "compile": {
+          "bin/placeholder/MigraDoc.DocumentObjectModel.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MigraDoc.DocumentObjectModel.dll": {}
+        }
+      },
+      "MigraDoc.Rendering/3.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "MigraDoc.DocumentObjectModel": "3.0.0",
+          "PdfSharp": "3.0.0",
+          "PdfSharp.Charting": "3.0.0",
+          "System.Drawing.Common": "4.5.0"
+        },
+        "compile": {
+          "bin/placeholder/MigraDoc.Rendering.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MigraDoc.Rendering.dll": {}
+        }
+      },
+      "PdfSharp/3.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "System.Drawing.Common": "4.5.0"
+        },
+        "compile": {
+          "bin/placeholder/PdfSharp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PdfSharp.dll": {}
+        }
+      },
+      "PdfSharp.Charting/3.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "PdfSharp": "3.0.0",
+          "System.Drawing.Common": "4.5.0"
+        },
+        "compile": {
+          "bin/placeholder/PdfSharp.Charting.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PdfSharp.Charting.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "System.Drawing.Common/4.5.0": {
+      "sha512": "AiJFxxVPdeITstiRS5aAu8+8Dpf5NawTMoapZ53Gfirml24p7HIfhjmCRxdXnmmf3IUA3AX3CcW7G73CjWxW/Q==",
+      "type": "package",
+      "path": "system.drawing.common/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.Drawing.Common.dll",
+        "ref/netstandard2.0/System.Drawing.Common.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "system.drawing.common.4.5.0.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Macaw.Pdf.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Macaw.Pdf.Interfaces/Macaw.Pdf.Interfaces.csproj",
+      "msbuildProject": "../Macaw.Pdf.Interfaces/Macaw.Pdf.Interfaces.csproj"
+    },
+    "Macaw.Pdf.Model/1.0.0": {
+      "type": "project",
+      "path": "../Macaw.Pdf.Model/Macaw.Pdf.Model.csproj",
+      "msbuildProject": "../Macaw.Pdf.Model/Macaw.Pdf.Model.csproj"
+    },
+    "Macaw.Pdf.ProviderService/1.0.0": {
+      "type": "project",
+      "path": "../Macaw.Pdf.ProviderService/Macaw.Pdf.ProviderService.csproj",
+      "msbuildProject": "../Macaw.Pdf.ProviderService/Macaw.Pdf.ProviderService.csproj"
+    },
+    "MigraDoc.DocumentObjectModel/3.0.0": {
+      "type": "project",
+      "path": "../MigraDoc.DocumentObjectModel/MigraDoc.DocumentObjectModel.csproj",
+      "msbuildProject": "../MigraDoc.DocumentObjectModel/MigraDoc.DocumentObjectModel.csproj"
+    },
+    "MigraDoc.Rendering/3.0.0": {
+      "type": "project",
+      "path": "../MigraDoc.Rendering/MigraDoc.Rendering.csproj",
+      "msbuildProject": "../MigraDoc.Rendering/MigraDoc.Rendering.csproj"
+    },
+    "PdfSharp/3.0.0": {
+      "type": "project",
+      "path": "../PdfSharp/PdfSharp.csproj",
+      "msbuildProject": "../PdfSharp/PdfSharp.csproj"
+    },
+    "PdfSharp.Charting/3.0.0": {
+      "type": "project",
+      "path": "../PdfSharp.Charting/PdfSharp.Charting.csproj",
+      "msbuildProject": "../PdfSharp.Charting/PdfSharp.Charting.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETStandard,Version=v2.1": [
+      "Macaw.Pdf.Interfaces >= 1.0.0",
+      "Macaw.Pdf.Model >= 1.0.0",
+      "Macaw.Pdf.ProviderService >= 1.0.0",
+      "MigraDoc.DocumentObjectModel >= 3.0.0",
+      "MigraDoc.Rendering >= 3.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\marcop\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Documents.CWD\\Macaw.Pdf.Documents.CWD.csproj",
+      "projectName": "Macaw.Pdf.Documents.CWD",
+      "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Documents.CWD\\Macaw.Pdf.Documents.CWD.csproj",
+      "packagesPath": "C:\\Users\\marcop\\.nuget\\packages\\",
+      "outputPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Documents.CWD\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\marcop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netstandard2.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "projectReferences": {
+            "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj": {
+              "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj"
+            },
+            "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj": {
+              "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj"
+            },
+            "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.ProviderService\\Macaw.Pdf.ProviderService.csproj": {
+              "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.ProviderService\\Macaw.Pdf.ProviderService.csproj"
+            },
+            "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj": {
+              "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj"
+            },
+            "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.Rendering\\MigraDoc.Rendering.csproj": {
+              "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.Rendering\\MigraDoc.Rendering.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "NETStandard.Library": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

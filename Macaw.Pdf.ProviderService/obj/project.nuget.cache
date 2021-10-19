@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "MNzJU7ZOyFQYGJEuXhaF3VK6ILfjLKpHkJHXZ9P5RmqCmaEB3E6QtbGBwxNYrGZeChJo4faFDGAe+AS4aw0pRg==",
+  "dgSpecHash": "nfFY216F7gAFEoC5Y8cbj5r4Zx9ailHbJEJSgNYqAgb8NJgw30E2iRCEbJ0Prlx2uNyVNN7L44AnlAtVs/JYMA==",
   "success": true,
   "projectFilePath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.ProviderService\\Macaw.Pdf.ProviderService.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\marcop\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
-    "C:\\Users\\marcop\\.nuget\\packages\\microsoft.win32.systemevents\\4.5.0\\microsoft.win32.systemevents.4.5.0.nupkg.sha512",
     "C:\\Users\\marcop\\.nuget\\packages\\system.drawing.common\\4.5.0\\system.drawing.common.4.5.0.nupkg.sha512"
   ],
   "logs": []
