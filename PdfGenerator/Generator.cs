@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Macaw.Pdf.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +21,7 @@ namespace Macaw.Pdf
         }
 
         [FunctionName("Create")]
-        public async Task<IActionResult> Create(
+        public IActionResult Create(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
             PdfData data = new PdfData {
