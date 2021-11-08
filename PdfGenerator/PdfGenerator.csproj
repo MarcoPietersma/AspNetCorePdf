@@ -30,5 +30,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="PdfProvider\Created\" />
+	  <Folder Include="PdfProvider\Modified\" />
 	</ItemGroup>
 </Project>

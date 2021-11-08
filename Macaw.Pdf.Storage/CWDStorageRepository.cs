@@ -1,9 +1,12 @@
 ﻿namespace Macaw.Pdf.Storage
 {
     using Azure.Storage.Blobs;
+    using HeyRed.Mime;
     using Macaw.Pdf.Interfaces;
     using Microsoft.Extensions.Configuration;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -17,15 +20,16 @@
             _configuration = configuration;
         }
 
-        public async Task<Stream> GetFileFromStorage(string reference, string extension)
+        public async Task<(Stream Stream, string MimeType)> GetFileFromStorage(string reference)
         {
             var container = await CreateClient();
-            var fileName = $"{reference}.{extension}";
+
+            var fileName = await GetFileByReference(reference);
 
             var blobClient = container.GetBlobClient(fileName);
 
             var d = await blobClient.DownloadStreamingAsync();
-            return d.Value.Content;
+            return (Stream: d.Value.Content, MimeType: MimeTypesMap.GetMimeType(blobClient.Name));
         }
 
         public async Task<string> ReadTextFromFile(string filename)
@@ -56,6 +60,24 @@
             await container.CreateIfNotExistsAsync();
 
             return container;
+        }
+
+        private async Task<string> GetFileByReference(string reference)
+        {
+            var files = await GetFiles();
+            var file = files.SingleOrDefault(e => e.StartsWith($"{reference}.", System.StringComparison.InvariantCultureIgnoreCase));
+            if (string.IsNullOrEmpty(file))
+            {
+                throw new FileNotFoundException("Blob not found", reference);
+            }
+
+            return file;
+        }
+
+        private async Task<IEnumerable<string>> GetFiles()
+        {
+            var container = await CreateClient();
+            return container.GetBlobs().Select(e => e.Name).ToList();
         }
     }
 }

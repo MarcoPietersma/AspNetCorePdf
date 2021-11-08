@@ -5,7 +5,7 @@ namespace Macaw.Pdf.Interfaces
 {
     public interface ICWDStorageRepository
     {
-        Task<Stream> GetFileFromStorage(string reference, string extension);
+        Task<(Stream Stream, string MimeType)> GetFileFromStorage(string reference);
 
         Task<string> ReadTextFromFile(string filename);
 

@@ -37,7 +37,23 @@ namespace Macaw.Pdf
             };
         }
 
-        [FunctionName("StoreImage")]
+        [FunctionName(nameof(FetchImage))]
+        public async Task<ActionResult> FetchImage([HttpTrigger(AuthorizationLevel.Function, "get", Route = "CWD/QuestionaireImage")] HttpRequest req)
+        {
+            var reference = req.Query["Reference"];
+
+            try
+            {
+                var responseStream = await storageRepository.GetFileFromStorage(reference);
+                return new FileStreamResult(responseStream.Stream, responseStream.MimeType);
+            }
+            catch (FileNotFoundException)
+            {
+                return new NotFoundResult();
+            }
+        }
+
+        [FunctionName(nameof(StoreImage))]
         public async Task<IActionResult> StoreImage([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/QuestionaireImage")] HttpRequest req)
         {
             var formdata = await req.ReadFormAsync();
