@@ -25,6 +25,5 @@ D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandar
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.AssemblyInfoInputs.cache
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.AssemblyInfo.cs
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.csproj.CoreCompileInputs.cache
-D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.csproj.CopyComplete
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.dll
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.ProviderService\obj\Debug\netstandard2.1\Macaw.Pdf.ProviderService.pdb

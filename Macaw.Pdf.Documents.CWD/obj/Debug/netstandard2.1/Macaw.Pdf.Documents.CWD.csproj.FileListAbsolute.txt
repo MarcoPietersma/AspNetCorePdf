@@ -10,7 +10,6 @@ D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.AssemblyInfoInputs.cache
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.AssemblyInfo.cs
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.csproj.CoreCompileInputs.cache
-D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.csproj.CopyComplete
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.dll
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\obj\Debug\netstandard2.1\Macaw.Pdf.Documents.CWD.pdb
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Documents.CWD\bin\Debug\netstandard2.1\Images\logo.jpg
