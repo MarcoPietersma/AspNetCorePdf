@@ -8,7 +8,6 @@ D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.AssemblyInfoInputs.cache
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.AssemblyInfo.cs
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.csproj.CoreCompileInputs.cache
-D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.csproj.CopyComplete
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.dll
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\obj\Debug\netstandard2.1\Macaw.Pdf.Interfaces.pdb
 D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Interfaces\bin\Debug\netstandard2.1\MigraDoc.DocumentObjectModel.dll

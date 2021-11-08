@@ -1,10 +1,11 @@
-﻿using Macaw.Pdf.Model;
+﻿using Macaw.Pdf.Documents.CWD;
+using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes.Charts;
 
 namespace Macaw.Pdf
 {
-    public class CWDMigraDocService<T> : MigraDocService<T> where T : IPdfData
+    public class CWDMigraDocService<T> : MigraDocService<T> where T : CWDReport, IPdfData
     {
         public override Document CreateDocument(T pdfData)
         {

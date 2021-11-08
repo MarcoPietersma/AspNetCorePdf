@@ -1,0 +1,16 @@
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Storage.deps.json
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Storage.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Storage.pdb
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Interfaces.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Model.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\MigraDoc.DocumentObjectModel.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Interfaces.pdb
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\Macaw.Pdf.Model.pdb
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\bin\Debug\netstandard2.1\MigraDoc.DocumentObjectModel.pdb
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.csproj.AssemblyReference.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.GeneratedMSBuildEditorConfig.editorconfig
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.AssemblyInfoInputs.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.AssemblyInfo.cs
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.csproj.CoreCompileInputs.cache
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.dll
+D:\src.PowerPlatform\PdfGenerator\Macaw.Pdf.Storage\obj\Debug\netstandard2.1\Macaw.Pdf.Storage.pdb

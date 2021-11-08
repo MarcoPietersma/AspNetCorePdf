@@ -1,4 +1,6 @@
 ﻿using Macaw.Pdf.Documents.CWD;
+using Macaw.Pdf.Interfaces;
+using Macaw.Pdf.Storage;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,8 @@ namespace Macaw.Pdf
             var services = builder.Services;
 
             services.AddScoped<IPdfSharpService, PdfSharpService>();
-            services.AddScoped<IMigraDocService<SomeReport>, CWDMigraDocService<SomeReport>>();
+            services.AddScoped<IMigraDocService<CWDReport>, CWDMigraDocService<CWDReport>>();
+            services.AddScoped<ICWDStorageRepository, CWDStorageRepository>();
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)

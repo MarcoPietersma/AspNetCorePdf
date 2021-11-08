@@ -2,7 +2,7 @@
 
 namespace Macaw.Pdf.Documents.CWD
 {
-    public class SomeReport : PdfData
+    public class CWDReport : PdfData
     {
     }
 }

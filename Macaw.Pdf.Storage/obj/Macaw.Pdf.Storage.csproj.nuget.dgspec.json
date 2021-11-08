@@ -1,0 +1,272 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Storage\\Macaw.Pdf.Storage.csproj": {}
+  },
+  "projects": {
+    "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj",
+        "projectName": "Macaw.Pdf.Interfaces",
+        "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj",
+        "packagesPath": "C:\\Users\\marcop\\.nuget\\packages\\",
+        "outputPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marcop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj": {
+                "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj"
+              },
+              "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj": {
+                "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj",
+        "projectName": "Macaw.Pdf.Model",
+        "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj",
+        "packagesPath": "C:\\Users\\marcop\\.nuget\\packages\\",
+        "outputPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marcop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Storage\\Macaw.Pdf.Storage.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Storage\\Macaw.Pdf.Storage.csproj",
+        "projectName": "Macaw.Pdf.Storage",
+        "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Storage\\Macaw.Pdf.Storage.csproj",
+        "packagesPath": "C:\\Users\\marcop\\.nuget\\packages\\",
+        "outputPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Storage\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marcop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj": {
+                "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Interfaces\\Macaw.Pdf.Interfaces.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.9.1, )"
+            },
+            "Azure.Storage.Queues": {
+              "target": "Package",
+              "version": "[12.5.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj": {
+      "version": "3.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj",
+        "projectName": "MigraDoc.DocumentObjectModel",
+        "projectPath": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\MigraDoc.DocumentObjectModel.csproj",
+        "packagesPath": "C:\\Users\\marcop\\.nuget\\packages\\",
+        "outputPath": "D:\\src.PowerPlatform\\PdfGenerator\\MigraDoc.DocumentObjectModel\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marcop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

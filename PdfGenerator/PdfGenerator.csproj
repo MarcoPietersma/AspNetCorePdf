@@ -4,8 +4,11 @@
 		<AzureFunctionsVersion>v3</AzureFunctionsVersion>
 		<AssemblyName>Macaw.Pdf</AssemblyName>
 		<RootNamespace>Macaw.Pdf</RootNamespace>
+		<UserSecretsId>1b76381a-0828-42a6-a3be-c0fec959d05c</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.13" />
 		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
 		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
 	</ItemGroup>
@@ -14,6 +17,7 @@
 	  <ProjectReference Include="..\Macaw.Pdf.Interfaces\Macaw.Pdf.Interfaces.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Model\Macaw.Pdf.Model.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.ProviderService\Macaw.Pdf.ProviderService.csproj" />
+	  <ProjectReference Include="..\Macaw.Pdf.Storage\Macaw.Pdf.Storage.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="host.json">
