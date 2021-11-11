@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Macaw.Pdf
 {
-    public class DemoMigraDocService<T> : MigraDocService<T> where T : IPdfData
+    public class DemoMigraDocService<T> : MigraDocService<T> where T : DemoDocumentData, IPdfData
     {
         public readonly string _imagesPath = ".\\PdfProvider\\Images";
         private readonly string _fillerTextMediumText = "fdvsvsvsfv fdsfsdfsf fdsfs fsdf fdsfsdfsd fdsfdsf f dsfdsfs  deded deded dedede dedede deded deded deded defdsfsdf fdfsdfsd  fdfdsfsdf fdfsdfs fdfdsfsd fdsfsdf fdf";

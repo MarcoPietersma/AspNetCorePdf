@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Macaw.Pdf.Model
+﻿namespace Macaw.Pdf.Model
 {
-    public abstract class PdfData : IPdfData
+    public abstract class DemoDocumentData : IPdfData
     {
         public string CreatedBy
         {
@@ -10,11 +8,6 @@ namespace Macaw.Pdf.Model
         }
 
         public string Description
-        {
-            get; set;
-        }
-
-        public List<ItemsToDisplay> DisplayListItems
         {
             get; set;
         }

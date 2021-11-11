@@ -1,4 +1,4 @@
-﻿using Macaw.Pdf.Interfaces;
+﻿using Macaw.Pdf.Model;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +6,7 @@ namespace Macaw.Pdf.Documents.CWD
 {
     public class CWDDocumentData : IPdfData
     {
+        public string DocumentName { get; set; }
         public int HandtekeningInspecteurId { get; set; }
         public int HandtekeningManagerId { get; set; }
 

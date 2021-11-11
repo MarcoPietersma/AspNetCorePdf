@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<AzureFunctionsVersion>v3</AzureFunctionsVersion>
@@ -14,6 +14,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Macaw.Pdf.Documents.CWD\Macaw.Pdf.Documents.CWD.csproj" />
+	  <ProjectReference Include="..\Macaw.Pdf.Documents.Demo\Macaw.Pdf.Documents.Demo.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Interfaces\Macaw.Pdf.Interfaces.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Model\Macaw.Pdf.Model.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.ProviderService\Macaw.Pdf.ProviderService.csproj" />

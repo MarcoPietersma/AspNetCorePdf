@@ -2,7 +2,8 @@
 
 namespace Macaw.Pdf.Documents.CWD
 {
-    public class CWDReport : PdfData
+    public class CWDReport : IPdfData
     {
+        public string DocumentName { get; set; }
     }
 }

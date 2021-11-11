@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaw.Pdf.Model", "Macaw.Pd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaw.Pdf.Documents.CWD", "Macaw.Pdf.Documents.CWD\Macaw.Pdf.Documents.CWD.csproj", "{B16AA5C3-46E0-4E08-8F1D-E1073B5B503E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macaw.Pdf.Storage", "Macaw.Pdf.Storage\Macaw.Pdf.Storage.csproj", "{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaw.Pdf.Storage", "Macaw.Pdf.Storage\Macaw.Pdf.Storage.csproj", "{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macaw.Pdf.Documents.Demo", "Macaw.Pdf.Documents.Demo\Macaw.Pdf.Documents.Demo.csproj", "{3438FC3C-450A-455E-BD29-507BF19F9D87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3438FC3C-450A-455E-BD29-507BF19F9D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3438FC3C-450A-455E-BD29-507BF19F9D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3438FC3C-450A-455E-BD29-507BF19F9D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3438FC3C-450A-455E-BD29-507BF19F9D87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{9EB42FBC-F0BC-4041-87A9-9D4A2075AE91} = {21A04C60-3288-48EE-B4B2-D56AA664EFAB}
 		{B16AA5C3-46E0-4E08-8F1D-E1073B5B503E} = {21A04C60-3288-48EE-B4B2-D56AA664EFAB}
 		{09A13E15-C7E5-4F83-B78C-B9ABA525A3CA} = {21A04C60-3288-48EE-B4B2-D56AA664EFAB}
+		{3438FC3C-450A-455E-BD29-507BF19F9D87} = {21A04C60-3288-48EE-B4B2-D56AA664EFAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B1DA06F-27AF-4C48-BB35-A4188F139877}

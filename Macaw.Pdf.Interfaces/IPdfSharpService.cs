@@ -1,9 +1,7 @@
-﻿using Macaw.Pdf.Model;
-
-namespace Macaw.Pdf
+﻿namespace Macaw.Pdf
 {
     public interface IPdfSharpService
     {
-        string CreatePdf(PdfData pdfData);
+        string CreatePdf();
     }
 }

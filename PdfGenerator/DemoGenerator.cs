@@ -1,5 +1,6 @@
 using Macaw.Pdf.Documents.CWD;
 using Macaw.Pdf.Interfaces;
+using Macaw.Pdf.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -11,14 +12,15 @@ using System.Threading.Tasks;
 
 namespace Macaw.Pdf
 {
-    public class CWDGenerator
+    public class DemoGenerator
     {
-        private const string FunctionNamePrefix = "CWD";
+        private const string FunctionNamePrefix = "Demo";
+
         private readonly ILogger<CWDGenerator> logger;
-        private readonly IMigraDocService<CWDDocumentData> migraDocService;
+        private readonly IMigraDocService<DemoDocumentData> migraDocService;
         private readonly ICWDStorageRepository storageRepository;
 
-        public CWDGenerator(ILogger<CWDGenerator> logger, IMigraDocService<CWDDocumentData> migraDocService, ICWDStorageRepository storageRepository)
+        public DemoGenerator(ILogger<CWDGenerator> logger, IMigraDocService<DemoDocumentData> migraDocService, ICWDStorageRepository storageRepository)
         {
             this.logger = logger;
             this.migraDocService = migraDocService;
@@ -27,7 +29,7 @@ namespace Macaw.Pdf
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
         public IActionResult Create(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/Questionaire")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Demo/DemoDocument")] HttpRequest req)
         {
             var data = new CWDReport();
 
@@ -35,7 +37,7 @@ namespace Macaw.Pdf
 
             using var sr = new StreamReader(req.Body);
             using var jsonTextReader = new JsonTextReader(sr);
-            var content = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
+            var content = serializer.Deserialize<DemoDocumentData>(jsonTextReader);
 
             var path = migraDocService.CreateMigraDocPdf(content);
 
@@ -46,7 +48,7 @@ namespace Macaw.Pdf
         }
 
         [FunctionName(FunctionNamePrefix + nameof(FetchImage))]
-        public async Task<ActionResult> FetchImage([HttpTrigger(AuthorizationLevel.Function, "get", Route = "CWD/QuestionaireImage")] HttpRequest req)
+        public async Task<ActionResult> FetchImage([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Demo/DemoImage")] HttpRequest req)
         {
             var reference = req.Query["Reference"];
 
@@ -62,7 +64,7 @@ namespace Macaw.Pdf
         }
 
         [FunctionName(FunctionNamePrefix + nameof(StoreImage))]
-        public async Task<IActionResult> StoreImage([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/QuestionaireImage")] HttpRequest req)
+        public async Task<IActionResult> StoreImage([HttpTrigger(AuthorizationLevel.Function, "post", Route = "Demo/DemoImage")] HttpRequest req)
         {
             var formdata = await req.ReadFormAsync();
             var file = req.Form.Files["file"];
