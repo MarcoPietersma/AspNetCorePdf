@@ -1,39 +1,34 @@
 #region MigraDoc - Creating Documents on the Fly
-//
-// Authors:
-//   Klaus Potzesny
+
+// Authors: Klaus Potzesny
 //
 // Copyright (c) 2001-2017 empira Software GmbH, Cologne Area (Germany)
 //
-// http://www.pdfsharp.com
-// http://www.migradoc.com
-// http://sourceforge.net/projects/pdfsharp
+// http://www.pdfsharp.com http://www.migradoc.com http://sourceforge.net/projects/pdfsharp
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-// DEALINGS IN THE SOFTWARE.
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System;
-using System.IO;
-using System.Diagnostics;
-using PdfSharp.Drawing;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering.Resources;
+using PdfSharp.Drawing;
+using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace MigraDoc.Rendering
 {
@@ -46,8 +41,10 @@ namespace MigraDoc.Rendering
             : base(gfx, image, fieldInfos)
         {
             _image = image;
-            ImageRenderInfo renderInfo = new ImageRenderInfo();
-            renderInfo.DocumentObject = _shape;
+            var renderInfo = new ImageRenderInfo
+            {
+                DocumentObject = _shape
+            };
             _renderInfo = renderInfo;
         }
 
@@ -60,14 +57,15 @@ namespace MigraDoc.Rendering
         public override void Format(Area area, FormatInfo previousFormatInfo)
         {
             _imageFilePath = _image.GetFilePath(_documentRenderer.WorkingDirectory);
-            // The Image is stored in the string if path starts with "base64:", otherwise we check whether the file exists.
+            // The Image is stored in the string if path starts with "base64:", otherwise we check
+            // whether the file exists.
             if (!_imageFilePath.StartsWith("base64:") &&
                 !XImage.ExistsFile(_imageFilePath))
             {
                 _failure = ImageFailure.FileNotFound;
                 Debug.WriteLine(Messages2.ImageNotFound(_image.Name), "warning");
             }
-            ImageFormatInfo formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
+            var formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
             formatInfo.Failure = _failure;
             formatInfo.ImagePath = _imageFilePath;
             CalculateImageDimensions();
@@ -78,7 +76,7 @@ namespace MigraDoc.Rendering
         {
             get
             {
-                ImageFormatInfo formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
+                var formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
                 return formatInfo.Height + _lineFormatRenderer.GetWidth();
             }
         }
@@ -87,7 +85,7 @@ namespace MigraDoc.Rendering
         {
             get
             {
-                ImageFormatInfo formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
+                var formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
                 return formatInfo.Width + _lineFormatRenderer.GetWidth();
             }
         }
@@ -96,16 +94,16 @@ namespace MigraDoc.Rendering
         {
             RenderFilling();
 
-            ImageFormatInfo formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
-            Area contentArea = _renderInfo.LayoutInfo.ContentArea;
-            XRect destRect = new XRect(contentArea.X, contentArea.Y, formatInfo.Width, formatInfo.Height);
+            var formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
+            var contentArea = _renderInfo.LayoutInfo.ContentArea;
+            var destRect = new XRect(contentArea.X, contentArea.Y, formatInfo.Width, formatInfo.Height);
 
             if (formatInfo.Failure == ImageFailure.None)
             {
                 XImage xImage = null;
                 try
                 {
-                    XRect srcRect = new XRect(formatInfo.CropX, formatInfo.CropY, formatInfo.CropWidth, formatInfo.CropHeight);
+                    var srcRect = new XRect(formatInfo.CropX, formatInfo.CropY, formatInfo.CropWidth, formatInfo.CropHeight);
                     //xImage = XImage.FromFile(formatInfo.ImagePath);
                     xImage = CreateXImage(formatInfo.ImagePath);
                     _gfx.DrawImage(xImage, destRect, srcRect, XGraphicsUnit.Point); //Pixel.
@@ -117,20 +115,24 @@ namespace MigraDoc.Rendering
                 finally
                 {
                     if (xImage != null)
+                    {
                         xImage.Dispose();
+                    }
                 }
             }
             else
+            {
                 RenderFailureImage(destRect);
+            }
 
             RenderLine();
         }
 
-        void RenderFailureImage(XRect destRect)
+        private void RenderFailureImage(XRect destRect)
         {
             _gfx.DrawRectangle(XBrushes.LightGray, destRect);
             string failureString;
-            ImageFormatInfo formatInfo = (ImageFormatInfo)RenderInfo.FormatInfo;
+            var formatInfo = (ImageFormatInfo)RenderInfo.FormatInfo;
 
             switch (formatInfo.Failure)
             {
@@ -153,13 +155,13 @@ namespace MigraDoc.Rendering
             }
 
             // Create stub font
-            XFont font = new XFont("Courier New", 8);
+            var font = new XFont("Courier New", 8);
             _gfx.DrawString(failureString, font, XBrushes.Red, destRect, XStringFormats.Center);
         }
 
         private void CalculateImageDimensions()
         {
-            ImageFormatInfo formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
+            var formatInfo = (ImageFormatInfo)_renderInfo.FormatInfo;
 
             if (formatInfo.Failure == ImageFailure.None)
             {
@@ -181,20 +183,20 @@ namespace MigraDoc.Rendering
                     {
                         XUnit usrWidth = _image.Width.Point;
                         XUnit usrHeight = _image.Height.Point;
-                        bool usrWidthSet = !_image._width.IsNull;
-                        bool usrHeightSet = !_image._height.IsNull;
+                        var usrWidthSet = !_image._width.IsNull;
+                        var usrHeightSet = !_image._height.IsNull;
 
-                        XUnit resultWidth = usrWidth;
-                        XUnit resultHeight = usrHeight;
+                        var resultWidth = usrWidth;
+                        var resultHeight = usrHeight;
 
                         Debug.Assert(xImage != null);
                         double xPixels = xImage.PixelWidth;
-                        bool usrResolutionSet = !_image._resolution.IsNull;
+                        var usrResolutionSet = !_image._resolution.IsNull;
 
-                        double horzRes = usrResolutionSet ? _image.Resolution : xImage.HorizontalResolution;
-                        double vertRes = usrResolutionSet ? _image.Resolution : xImage.VerticalResolution;
+                        var horzRes = usrResolutionSet ? _image.Resolution : xImage.HorizontalResolution;
+                        var vertRes = usrResolutionSet ? _image.Resolution : xImage.VerticalResolution;
 
-// ReSharper disable CompareOfFloatsByEqualityOperator
+                        // ReSharper disable CompareOfFloatsByEqualityOperator
                         if (horzRes == 0 && vertRes == 0)
                         {
                             horzRes = 72;
@@ -212,19 +214,19 @@ namespace MigraDoc.Rendering
                         }
                         // ReSharper restore CompareOfFloatsByEqualityOperator
 
-                        XUnit inherentWidth = XUnit.FromInch(xPixels / horzRes);
+                        var inherentWidth = XUnit.FromInch(xPixels / horzRes);
                         double yPixels = xImage.PixelHeight;
-                        XUnit inherentHeight = XUnit.FromInch(yPixels / vertRes);
+                        var inherentHeight = XUnit.FromInch(yPixels / vertRes);
 
                         //bool lockRatio = _image.IsNull("LockAspectRatio") ? true : _image.LockAspectRatio;
-                        bool lockRatio = _image._lockAspectRatio.IsNull || _image.LockAspectRatio;
+                        var lockRatio = _image._lockAspectRatio.IsNull || _image.LockAspectRatio;
 
-                        double scaleHeight = _image.ScaleHeight;
-                        double scaleWidth = _image.ScaleWidth;
+                        var scaleHeight = _image.ScaleHeight;
+                        var scaleWidth = _image.ScaleWidth;
                         //bool scaleHeightSet = !_image.IsNull("ScaleHeight");
                         //bool scaleWidthSet = !_image.IsNull("ScaleWidth");
-                        bool scaleHeightSet = !_image._scaleHeight.IsNull;
-                        bool scaleWidthSet = !_image._scaleWidth.IsNull;
+                        var scaleHeightSet = !_image._scaleHeight.IsNull;
+                        var scaleWidthSet = !_image._scaleWidth.IsNull;
 
                         if (lockRatio && !(scaleHeightSet && scaleWidthSet))
                         {
@@ -236,7 +238,7 @@ namespace MigraDoc.Rendering
                             {
                                 resultWidth = inherentWidth / inherentHeight * usrHeight;
                             }
-// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                             else if (!usrHeightSet && !usrWidthSet)
                             {
                                 resultHeight = inherentHeight;
@@ -257,22 +259,31 @@ namespace MigraDoc.Rendering
                         else
                         {
                             if (!usrHeightSet)
+                            {
                                 resultHeight = inherentHeight;
+                            }
 
                             if (!usrWidthSet)
+                            {
                                 resultWidth = inherentWidth;
+                            }
 
                             if (scaleHeightSet)
+                            {
                                 resultHeight = resultHeight * scaleHeight;
+                            }
+
                             if (scaleWidthSet)
+                            {
                                 resultWidth = resultWidth * scaleWidth;
+                            }
                         }
 
                         formatInfo.CropWidth = (int)xPixels;
                         formatInfo.CropHeight = (int)yPixels;
                         if (_image._pictureFormat != null && !_image._pictureFormat.IsNull())
                         {
-                            PictureFormat picFormat = _image.PictureFormat;
+                            var picFormat = _image.PictureFormat;
                             //Cropping in pixels.
                             XUnit cropLeft = picFormat.CropLeft.Point;
                             XUnit cropRight = picFormat.CropRight.Point;
@@ -284,8 +295,8 @@ namespace MigraDoc.Rendering
                             formatInfo.CropHeight -= (int)(vertRes * ((XUnit)(cropTop + cropBottom)).Inch);
 
                             //Scaled cropping of the height and width.
-                            double xScale = resultWidth / inherentWidth;
-                            double yScale = resultHeight / inherentHeight;
+                            var xScale = resultWidth / inherentWidth;
+                            var yScale = resultHeight / inherentHeight;
 
                             cropLeft = xScale * cropLeft;
                             cropRight = xScale * cropRight;
@@ -316,37 +327,48 @@ namespace MigraDoc.Rendering
                     finally
                     {
                         if (xImage != null)
+                        {
                             xImage.Dispose();
+                        }
                     }
                 }
             }
             if (formatInfo.Failure != ImageFailure.None)
             {
                 if (!_image._width.IsNull)
+                {
                     formatInfo.Width = _image.Width.Point;
+                }
                 else
+                {
                     formatInfo.Width = XUnit.FromCentimeter(2.5);
+                }
 
                 if (!_image._height.IsNull)
+                {
                     formatInfo.Height = _image.Height.Point;
+                }
                 else
+                {
                     formatInfo.Height = XUnit.FromCentimeter(2.5);
+                }
             }
         }
 
-        XImage CreateXImage(string uri)
+        private XImage CreateXImage(string uri)
         {
             if (uri.StartsWith("base64:"))
             {
-                string base64 = uri.Substring("base64:".Length);
-                byte[] bytes = Convert.FromBase64String(base64);
+                var base64 = uri.Substring("base64:".Length);
+                var bytes = Convert.FromBase64String(base64);
 #if WPF || CORE_WITH_GDI || GDI
-                // WPF stores a reference to the stream publicly. We must not destroy the stream here, otherwise rendering the PDF will fail.
-                // Same for GDI. CORE currently uses the GDI implementation.
-                // We have to rely on the garbage collector to properly dispose the MemoryStream.
+                // WPF stores a reference to the stream publicly. We must not destroy the stream
+                // here, otherwise rendering the PDF will fail. Same for GDI. CORE currently uses
+                // the GDI implementation. We have to rely on the garbage collector to properly
+                // dispose the MemoryStream.
                 {
                     Stream stream = new MemoryStream(bytes);
-                    XImage image = XImage.FromStream(stream);
+                    var image = XImage.FromStream(stream);
                     return image;
                 }
 #else
@@ -360,8 +382,8 @@ namespace MigraDoc.Rendering
             return XImage.FromFile(uri);
         }
 
-        readonly Image _image;
-        string _imageFilePath;
-        ImageFailure _failure;
+        private readonly Image _image;
+        private string _imageFilePath;
+        private ImageFailure _failure;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Macaw.Pdf.Model
 {
-    public abstract class DemoDocumentData : IPdfData
+    public class DemoDocumentData : IPdfData
     {
         public string CreatedBy
         {

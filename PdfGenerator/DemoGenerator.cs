@@ -1,4 +1,3 @@
-using Macaw.Pdf.Documents.CWD;
 using Macaw.Pdf.Interfaces;
 using Macaw.Pdf.Model;
 using Microsoft.AspNetCore.Http;
@@ -28,20 +27,24 @@ namespace Macaw.Pdf
         }
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
-        public IActionResult Create(
+        public async Task<IActionResult> Create(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Demo/DemoDocument")] HttpRequest req)
         {
-            var data = new CWDReport();
-
-            var serializer = new JsonSerializer();
-
             using var sr = new StreamReader(req.Body);
             using var jsonTextReader = new JsonTextReader(sr);
-            var content = serializer.Deserialize<DemoDocumentData>(jsonTextReader);
+
+            var t = await sr.ReadToEndAsync();
+
+            var content = JsonConvert.DeserializeObject<DemoDocumentData>(t);
+
+            if (string.IsNullOrEmpty(content.DocumentName))
+            {
+                return new BadRequestResult();
+            }
 
             var path = migraDocService.CreateMigraDocPdf(content);
 
-            return new FileContentResult(File.ReadAllBytes(path), "application/pdf")
+            return new FileContentResult(await File.ReadAllBytesAsync(path), "application/pdf")
             {
                 FileDownloadName = "Export.pdf"
             };
