@@ -17,7 +17,7 @@ namespace Macaw.Pdf
             var services = builder.Services;
 
             // services.AddScoped<IPdfSharpService, DemoPdfSharpService>();
-            services.AddScoped<IMigraDocService<DemoDocumentData>, CWDMigraDocService<DemoDocumentData>>();
+            services.AddScoped<IMigraDocService<DemoDocumentData>, DemoMigraDocService<DemoDocumentData>>();
             services.AddScoped<IMigraDocService<CWDDocumentData>, CWDMigraDocService<CWDDocumentData>>();
             services.AddScoped<ICWDStorageRepository, CWDStorageRepository>();
         }
