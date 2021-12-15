@@ -1,12 +1,13 @@
 ﻿using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
+using System.Threading.Tasks;
 
 namespace Macaw.Pdf
 {
     public interface IMigraDocService<T> where T : IPdfData
     {
-        Document CreateDocument(T pdfData);
+        Task<Document> CreateDocument(T pdfData);
 
-        string CreateMigraDocPdf(T pdfData);
+        Task<string> CreateMigraDocPdf(T pdfData);
     }
 }

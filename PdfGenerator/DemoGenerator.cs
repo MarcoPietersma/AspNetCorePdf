@@ -42,7 +42,7 @@ namespace Macaw.Pdf
                 return new BadRequestResult();
             }
 
-            var path = migraDocService.CreateMigraDocPdf(content);
+            var path = await migraDocService.CreateMigraDocPdf(content);
 
             return new FileContentResult(await File.ReadAllBytesAsync(path), "application/pdf")
             {

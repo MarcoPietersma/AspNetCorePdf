@@ -6,6 +6,7 @@ namespace Macaw.Pdf.Documents.CWD
 {
     public class CWDDocumentData : IPdfData
     {
+        public IEnumerable<Bijlage> Bijlages { get; set; }
         public string DocumentName { get; set; }
         public int HandtekeningInspecteurId { get; set; }
         public int HandtekeningManagerId { get; set; }
@@ -21,6 +22,7 @@ namespace Macaw.Pdf.Documents.CWD
         public string Manager { get; set; }
         public IEnumerable<NOKAntwoord> NOKAntwoorden { get; set; }
         public string ObjectNummer { get; set; }
+        public string Opmerkingen { get; set; }
         public IEnumerable<OverigAntwoord> OverigeAntwoorden { get; set; }
     }
 }

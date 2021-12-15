@@ -1,117 +1,71 @@
 ﻿using Macaw.Pdf.Documents.CWD;
+using Macaw.Pdf.Interfaces;
 using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Macaw.Pdf;
 
 public class CWDMigraDocService<T> : MigraDocService<T> where T : IPdfData
 {
-    private readonly string _imagesPath = ".\\Images";
+    private readonly ICWDStorageRepository cWDStorageRepository;
 
-
-    public override Document CreateDocument(T pdfData)
+    public CWDMigraDocService(ICWDStorageRepository cWDStorageRepository) : base()
     {
-        {
-            // Create a new MigraDoc document
-            var document = new Document();
-            //document.Info.Title = pdfData.DocumentTitle;
-            //document.Info.Subject = pdfData.Description;
-            //document.Info.Author = pdfData.CreatedBy;
+        this.cWDStorageRepository = cWDStorageRepository;
+    }
 
-            var data = pdfData as CWDDocumentData;
-            
+    public override async Task<Document> CreateDocument(T pdfData)
+    {
+        var data = pdfData as CWDDocumentData;
 
-            var constructor = new documentConstructor(this.data);
+        var constructor = new DocumentConstructor(data, cWDStorageRepository);
 
-            return document;
-        }
+        return await constructor.Create();
     }
 }
-    internal class documentConstructor 
+
+/// <summary>
+/// non generic class for hotreload in dotnet 6
+/// </summary>
+internal class DocumentConstructor
 {
+    private readonly string _imagesPath = ".\\Images";
 
-    CWDDocumentData data;
-    Document document;
+    private readonly ICWDStorageRepository cWDStorageRepository;
+    private CWDDocumentData data;
+    private Document document;
 
-    public documentConstructor(CWDDocumentData data)
+    public DocumentConstructor(CWDDocumentData data, ICWDStorageRepository cWDStorageRepository)
     {
-        this.data=data;
+        this.document = new Document();
+        this.data = data;
+        this.cWDStorageRepository = cWDStorageRepository;
     }
 
-    public Document Create()
+    public async Task<Document> Create()
     {
-
         DefineStyles();
+        await DefineCover();
+        await DefineMainContentSection();
 
-        DefineCover();
-
-        DefineMainContentSection();
-
+        return document;
     }
 
-    private void DefineMainContentSection()
+    public async Task<string> FetchImageFromStorage(string reference)
     {
-        InjectHeader();
-        InjectQuestions();
-        InjectGeneralRemarks();
-        InjectOtherQuestions();
-        InjectAddemdums();
+        var image = await cWDStorageRepository.GetFileFromStorage(reference);
+        using var reader = new MemoryStream();
+        image.Stream.CopyTo(reader);
+        var base64 = Convert.ToBase64String(reader.ToArray());
+
+        return $"base64:{base64}";
     }
 
-    private void InjectAddemdums()
-    {
-       
-    }
-
-    private void InjectOtherQuestions()
-    {
-      
-    }
-
-    private void InjectGeneralRemarks()
-    {
-      
-    }
-
-    private void InjectQuestions()
-    {
-        foreach (var item in data.NOKAntwoorden)
-        {            
-            var paragraph = document.LastSection.AddParagraph();
-         
-            paragraph.Format.Alignment = ParagraphAlignment.Left;
-            paragraph.Style = "QuestionHeader";
-            paragraph.AddText(item.Vraag);
-
-            paragraph = document.LastSection.AddParagraph();
-            paragraph.Format.SpaceAfter = "2cm";
-            paragraph.Format.Alignment = ParagraphAlignment.Left;
-            paragraph.Style = "QuestionBody";
-            paragraph.AddText(item.Antwoord);
-
-        }
-    }
-
-    private void InjectHeader(Document document)
-    {
-        var section = document.AddSection();
-
-        var p  =section.Headers.Primary.AddParagraph();
-
-        p.Format.Alignment = ParagraphAlignment.Left;
-        p.Style = "Normal";
-
-        p.AddFormattedText($"NEN {data.InspectieNummer}, Inspectie raport :{data.DocumentName}");
-        p.Format.Font.Size = 6;
-        p.AddFormattedText($"Project: {data.ObjectNummer} PO no:{data.ObjectNummer}");
-        p.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
-
-
-    }
-
-    internal void DefineStyles(Document document)
+    internal void DefineStyles()
     {
         // Get the predefined style Normal.
         var style = document.Styles["Normal"];
@@ -160,10 +114,9 @@ public class CWDMigraDocService<T> : MigraDocService<T> where T : IPdfData
         style.Font.Italic = true;
         style.ParagraphFormat.SpaceBefore = 6;
         style.ParagraphFormat.SpaceAfter = 3;
-
     }
 
-    private void DefineContentSection(Document document)
+    private void DefineContentSection()
     {
         var section = document.AddSection();
         section.PageSetup.OddAndEvenPagesHeaderFooter = true;
@@ -188,59 +141,154 @@ public class CWDMigraDocService<T> : MigraDocService<T> where T : IPdfData
         section.Footers.EvenPage.Add(paragraph.Clone());
     }
 
-    private void DefineCover(Document document)
+    private async Task DefineCover()
+    {
+        //https://forum.pdfsharp.net/viewtopic.php?f=2&t=3555
+
+        var section = document.AddSection();
+
+        var image = section.AddImage(await FetchImageFromStorage("CoverImage"));
+        image.RelativeHorizontal = RelativeHorizontal.Page;
+        image.RelativeVertical = RelativeVertical.Paragraph;
+        image.Left = ShapePosition.Left;
+        image.Width = "21cm";
+        image.Top = ShapePosition.Top;
+
+        var tf = document.LastSection.AddTextFrame();
+        tf.Left = ShapePosition.Center;
+        tf.Top = ShapePosition.Center;
+        tf.Height = "100pt";
+        tf.Width = "100pt";
+        tf.FillFormat.Color = Colors.DarkGray;
+    }
+
+    private async Task DefineMainContentSection()
+    {
+        await InjectHeader();
+        InjectQuestions();
+        InjectGeneralRemarks();
+        InjectOtherQuestions();
+        await InjectAddemdums();
+    }
+
+    private async Task InjectAddemdums()
+    {
+        foreach (var bijlage in data.Bijlages)
+        {
+            var paragraph = document.LastSection.AddParagraph();
+
+            paragraph.AddFormattedText($"Bijlage {bijlage.Nummer}: {bijlage.Titel}", new Font { Size = "21pt" });
+            paragraph.AddLineBreak();
+            paragraph.AddLineBreak();
+
+            foreach (var item in bijlage.BijlageItems)
+            {
+                paragraph.AddFormattedText(item.Tekst, new Font() { Bold = true });
+                paragraph.AddLineBreak();
+                foreach (var reference in item.Fotos)
+                {
+                    var base64Image = await FetchImageFromStorage(reference);
+                    var image = paragraph.AddImage(base64Image);
+                    image.Width = 300;
+                    image.LockAspectRatio = true;
+                }
+                paragraph.AddLineBreak();
+            }
+        }
+    }
+
+    private void InjectGeneralRemarks()
+    {
+        var paragraph = document.LastSection.AddParagraph();
+
+        paragraph.Format.Font.Size = "21pt";
+        paragraph.AddText("Algemene Opmerkingen");
+
+        paragraph = document.LastSection.AddParagraph();
+
+        paragraph.Format.Alignment = ParagraphAlignment.Left;
+        paragraph.Style = "QuestionHeader";
+        paragraph.AddText(data.Opmerkingen);
+        paragraph.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
+    }
+
+    private async Task InjectHeader()
     {
         var section = document.AddSection();
 
-        var image = section.AddImage($"{_imagesPath}\\CoverImage.jpg");
-        image.RelativeHorizontal = RelativeHorizontal.Page;
-        image.RelativeVertical = RelativeVertical.Paragraph;
-        image.Left = "0pt";
-        image.Width = "21cm";
-        image.Top = "0pt";
+        var p = section.Headers.Primary.AddParagraph();
 
-        
+        p.Format.Alignment = ParagraphAlignment.Left;
+        p.Style = "Normal";
+        p.Format.Font.Size = "18pt";
+        p.AddFormattedText($"NEN {data.InspectieNummer}, Inspectie raport :{data.DocumentName}");
+        p.AddLineBreak();
+        p.Format.Font.Size = "11pt";
+        p.AddFormattedText($"Project: {data.ObjectNummer} PO no:{data.ObjectNummer}");
+        p.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
+
+        var tf = section.Headers.Primary.AddTextFrame();
+
+        tf.RelativeHorizontal = RelativeHorizontal.Page;
+        tf.RelativeVertical = RelativeVertical.Page;
+        tf.Top = ShapePosition.Top;
+        tf.Left = ShapePosition.Right;
+        var paragraph = tf.AddParagraph();
+        paragraph.Format.Alignment = ParagraphAlignment.Right;
+
+        var image = paragraph.AddImage(await FetchImageFromStorage("cwdlogo"));
+        image.Width = "250pt";
     }
 
-    private void DefineParagraphs(Document document)
+    private void InjectOtherQuestions()
     {
-        var paragraph = document.LastSection.AddParagraph("Paragraph Layout Overview", "Heading1");
-        paragraph.AddBookmark("Paragraphs");
+        var paragraph = document.LastSection.AddParagraph();
+
+        paragraph.Format.Font.Size = "21pt";
+        paragraph.AddText("Overige vragen");
+        paragraph.Format.SpaceAfter = "2cm";
+        foreach (var item in data.OverigeAntwoorden)
+        {
+            paragraph = document.LastSection.AddParagraph();
+            paragraph.Format.Alignment = ParagraphAlignment.Left;
+            paragraph.Format.Font.Bold = true;
+            paragraph.Style = "QuestionHeader";
+            paragraph.AddText(item.Vraag);
+
+            paragraph = document.LastSection.AddParagraph();
+            paragraph.Format.SpaceAfter = "2cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Left;
+            paragraph.Style = "QuestionBody";
+            paragraph.AddText(item.Antwoord);
+        }
+
+        paragraph.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
     }
 
-    private void DefineTableOfContents(Document document)
+    private void InjectQuestions()
     {
-        var section = document.LastSection;
+        var paragraph = document.LastSection.AddParagraph();
 
-        section.AddPageBreak();
-        var paragraph = section.AddParagraph("Table of Contents");
-        paragraph.Format.Font.Size = 14;
-        paragraph.Format.Font.Bold = true;
-        paragraph.Format.SpaceAfter = 24;
-        paragraph.Format.OutlineLevel = OutlineLevel.Level1;
+        paragraph.Format.Font.Size = "21pt";
+        paragraph.AddText("Niet Oke(andere tekst)");
+        paragraph.Format.SpaceAfter = "2cm";
 
-        paragraph = section.AddParagraph();
-        paragraph.Style = "TOC";
-        var hyperlink = paragraph.AddHyperlink("Paragraphs");
-        hyperlink.AddText("Paragraphs\t");
-        hyperlink.AddPageRefField("Paragraphs");
+        foreach (var item in data.NOKAntwoorden)
+        {
+            paragraph = document.LastSection.AddParagraph();
 
-        paragraph = section.AddParagraph();
-        paragraph.Style = "TOC";
-        hyperlink = paragraph.AddHyperlink("Tables");
-        hyperlink.AddText("Tables\t");
-        hyperlink.AddPageRefField("Tables");
+            paragraph.Format.Alignment = ParagraphAlignment.Left;
+            paragraph.Format.Font.Bold = true;
+            paragraph.Style = "QuestionHeader";
+            paragraph.AddText(item.Vraag);
 
-        paragraph = section.AddParagraph();
-        paragraph.Style = "TOC";
-        hyperlink = paragraph.AddHyperlink("Charts");
-        hyperlink.AddText("Charts\t");
-        hyperlink.AddPageRefField("Charts");
-    }
+            paragraph = document.LastSection.AddParagraph();
+            paragraph.Format.SpaceAfter = "2cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Left;
+            paragraph.Style = "QuestionBody";
+            paragraph.AddText(item.Antwoord);
+        }
 
-    private void DefineTables(Document document)
-    {
-        var paragraph = document.LastSection.AddParagraph("Table Overview", "Heading1");
-        paragraph.AddBookmark("Tables");
+        paragraph.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
     }
 }

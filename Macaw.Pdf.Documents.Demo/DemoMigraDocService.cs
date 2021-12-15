@@ -1,8 +1,10 @@
-﻿using Macaw.Pdf.Model;
+﻿using Macaw.Pdf.Interfaces;
+using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes.Charts;
 using MigraDoc.DocumentObjectModel.Tables;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Macaw.Pdf
 {
@@ -19,7 +21,10 @@ namespace Macaw.Pdf
             currentDirectory.CreateSubdirectory(_imagesPath);
         }
 
-        public override Document CreateDocument(T pdfData)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
+        public override async Task<Document> CreateDocument(T pdfData)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             {
                 // Create a new MigraDoc document

@@ -88,7 +88,7 @@ namespace MigraDoc.DocumentObjectModel
         /// </summary>
         public Text AddText(String text)
         {
-            return Elements.AddText(text);
+            return Elements.AddText(text ?? "");
         }
 
         /// <summary>

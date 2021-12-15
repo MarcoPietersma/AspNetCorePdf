@@ -26,7 +26,7 @@ namespace Macaw.Pdf
         }
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
-        public IActionResult Create(
+        public async Task<IActionResult> Create(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/Questionaire")] HttpRequest req)
         {
             var data = new CWDReport();
@@ -37,7 +37,7 @@ namespace Macaw.Pdf
             using var jsonTextReader = new JsonTextReader(sr);
             var content = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
 
-            var path = migraDocService.CreateMigraDocPdf(content);
+            var path = await migraDocService.CreateMigraDocPdf(content);
 
             return new FileContentResult(File.ReadAllBytes(path), "application/pdf")
             {
@@ -65,6 +65,11 @@ namespace Macaw.Pdf
         public async Task<IActionResult> StoreImage([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/QuestionaireImage")] HttpRequest req)
         {
             var formdata = await req.ReadFormAsync();
+
+            if (formdata.Files.Count == 0)
+            {
+                return new BadRequestResult();
+            }
             var file = req.Form.Files["file"];
 
             if (file.ContentType.Split("/")[0] != "image")

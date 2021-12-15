@@ -5,6 +5,7 @@
     using Macaw.Pdf.Interfaces;
     using Microsoft.Extensions.Configuration;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -31,6 +32,7 @@
             var d = await blobClient.DownloadStreamingAsync();
             return (Stream: d.Value.Content, MimeType: MimeTypesMap.GetMimeType(blobClient.Name));
         }
+
 
         public async Task<string> ReadTextFromFile(string filename)
         {
