@@ -9,11 +9,17 @@ namespace Macaw.Pdf.Documents.CWD
     {
         public IEnumerable<Bijlage> Bijlages { get; set; }
         public string DocumentName { get; set; }
+
+        [JsonProperty("e-mailmanager")]
+        public string EmailManager { get; set; }
+
+        [JsonProperty("e-mailrapport")]
+        public string EmailRapport { get; set; }
+
         public Guid? HandtekeningInspecteurId { get; set; }
         public Guid? HandtekeningManagerId { get; set; }
         public string Inspecteur { get; set; }
         public DateTime InspectieDatum { get; set; }
-
         public string InspectieNummer { get; set; }
 
         public string InspectieTemplateNaam { get; set; }

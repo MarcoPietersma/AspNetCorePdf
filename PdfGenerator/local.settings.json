@@ -3,6 +3,7 @@
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true"
-
+    //  "SendGridApiKey": "**** set in user secrets *****",
+    //  "SendGrid_From"": "**** set in user secrets *****",
   }
 }

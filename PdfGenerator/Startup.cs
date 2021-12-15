@@ -1,10 +1,12 @@
 ﻿using Macaw.Pdf.Documents.CWD;
 using Macaw.Pdf.Interfaces;
 using Macaw.Pdf.Model;
+using Macaw.Pdf.Services;
 using Macaw.Pdf.Storage;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SendGrid.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(Macaw.Pdf.Startup))]
 
@@ -14,12 +16,17 @@ namespace Macaw.Pdf
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            var context = builder.GetContext();
             var services = builder.Services;
+
+            var config = context.Configuration;
 
             // services.AddScoped<IPdfSharpService, DemoPdfSharpService>();
             services.AddScoped<IMigraDocService<DemoDocumentData>, DemoMigraDocService<DemoDocumentData>>();
             services.AddScoped<IMigraDocService<CWDDocumentData>, CWDMigraDocService<CWDDocumentData>>();
             services.AddScoped<ICWDStorageRepository, CWDStorageRepository>();
+            services.AddScoped<ISendGridService, SendGridService>();
+            services.AddSendGrid(options => options.ApiKey = config["SendGridApiKey"]);
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)

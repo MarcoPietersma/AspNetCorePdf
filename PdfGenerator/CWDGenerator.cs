@@ -1,5 +1,6 @@
 using Macaw.Pdf.Documents.CWD;
 using Macaw.Pdf.Interfaces;
+using Macaw.Pdf.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -17,20 +18,22 @@ namespace Macaw.Pdf
         private const string FunctionNamePrefix = "CWD";
         private readonly ILogger<CWDGenerator> logger;
         private readonly IMigraDocService<CWDDocumentData> migraDocService;
+        private readonly ISendGridService sendGridService;
         private readonly ICWDStorageRepository storageRepository;
 
-        public CWDGenerator(ILogger<CWDGenerator> logger, IMigraDocService<CWDDocumentData> migraDocService, ICWDStorageRepository storageRepository)
+        public CWDGenerator(ILogger<CWDGenerator> logger, IMigraDocService<CWDDocumentData> migraDocService, ICWDStorageRepository storageRepository, ISendGridService sendGridService)
         {
             this.logger = logger;
             this.migraDocService = migraDocService;
             this.storageRepository = storageRepository;
+            this.sendGridService = sendGridService;
         }
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
         public async Task<IActionResult> Create(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/Questionaire")] HttpRequest req, ExecutionContext context)
         {
-            CWDDocumentData content = null;
+            CWDDocumentData CWDDocument = null;
             try
             {
                 var data = new CWDReport();
@@ -38,10 +41,10 @@ namespace Macaw.Pdf
                 var serializer = new JsonSerializer();
                 using var sr = new StreamReader(req.Body);
                 using var jsonTextReader = new JsonTextReader(sr);
-                content = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
+                CWDDocument = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
 
-                content.NOKAntwoorden = JsonConvert.DeserializeObject<IEnumerable<NOKAntwoord>>(content.NOKAntwoordenString);
-                content.OverigeAntwoorden = JsonConvert.DeserializeObject<IEnumerable<OverigAntwoord>>(content.OtherAntwoordenString);
+                CWDDocument.NOKAntwoorden = JsonConvert.DeserializeObject<IEnumerable<NOKAntwoord>>(CWDDocument.NOKAntwoordenString);
+                CWDDocument.OverigeAntwoorden = JsonConvert.DeserializeObject<IEnumerable<OverigAntwoord>>(CWDDocument.OtherAntwoordenString);
             }
             catch (System.Exception ex)
             {
@@ -49,11 +52,20 @@ namespace Macaw.Pdf
             }
 
             migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
-            var path = await migraDocService.CreateMigraDocPdf(content);
-            return new FileContentResult(File.ReadAllBytes(path), "application/pdf")
+            var path = await migraDocService.CreateMigraDocPdf(CWDDocument);
+
+            var properties = new Dictionary<string, string>
             {
-                FileDownloadName = "Export.pdf"
+                { nameof(CWDDocument.Inspecteur), CWDDocument.Inspecteur }
             };
+
+            await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
+                "Nieuw Inspectie Rapport",
+                 $"Hierbij een nieuw inspectie rapport van {{{{{nameof(CWDDocument.Inspecteur)}}}}}",
+                 properties,
+                 path);
+
+            return new OkResult();
         }
 
         [FunctionName(FunctionNamePrefix + nameof(FetchImage))]
