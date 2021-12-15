@@ -7,8 +7,11 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Macaw.Pdf
@@ -27,6 +30,16 @@ namespace Macaw.Pdf
             this.migraDocService = migraDocService;
             this.storageRepository = storageRepository;
             this.sendGridService = sendGridService;
+        }
+
+        public static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
@@ -101,6 +114,24 @@ namespace Macaw.Pdf
             }
 
             await storageRepository.WriteFileToStorage(formdata["requestIdentifier"].ToString(), file.FileName.Split(".")[1], file.OpenReadStream());
+
+            return new OkResult();
+        }
+
+        [FunctionName(FunctionNamePrefix + nameof(StoreImageFromBase64))]
+        public async Task<IActionResult> StoreImageFromBase64([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/QuestionaireImageBase64")] HttpRequest req)
+        {
+            var serializer = new JsonSerializer();
+
+            using var sr = new StreamReader(req.Body);
+            using var jsonTextReader = new JsonTextReader(sr);
+
+            var image = JToken.ReadFrom(jsonTextReader);
+            var fotoId = image["fotoId"].Value<string>();
+            var bytes = Convert.FromBase64String(image["foto"].Value<string>());
+            var contents = new StreamContent(new MemoryStream(bytes));
+
+            await storageRepository.WriteFileToStorage(fotoId, ".png", contents.ReadAsStream());
 
             return new OkResult();
         }

@@ -5,7 +5,6 @@
     using Macaw.Pdf.Interfaces;
     using Microsoft.Extensions.Configuration;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -33,7 +32,6 @@
             return (Stream: d.Value.Content, MimeType: MimeTypesMap.GetMimeType(blobClient.Name));
         }
 
-
         public async Task<string> ReadTextFromFile(string filename)
         {
             var container = await CreateClient();
@@ -51,8 +49,9 @@
             var container = await CreateClient();
 
             var fileName = $"{reference}.{extension}";
+            var blob = container.GetBlobClient(fileName);
 
-            await container.UploadBlobAsync(fileName, fileSteam);
+            await blob.UploadAsync(fileSteam, overwrite: true);
         }
 
         private async Task<BlobContainerClient> CreateClient()
