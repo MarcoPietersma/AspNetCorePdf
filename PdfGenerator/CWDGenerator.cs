@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -27,18 +28,28 @@ namespace Macaw.Pdf
 
         [FunctionName(FunctionNamePrefix + nameof(Create))]
         public async Task<IActionResult> Create(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/Questionaire")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CWD/Questionaire")] HttpRequest req, ExecutionContext context)
         {
-            var data = new CWDReport();
+            CWDDocumentData content = null;
+            try
+            {
+                var data = new CWDReport();
 
-            var serializer = new JsonSerializer();
+                var serializer = new JsonSerializer();
+                using var sr = new StreamReader(req.Body);
+                using var jsonTextReader = new JsonTextReader(sr);
+                content = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
 
-            using var sr = new StreamReader(req.Body);
-            using var jsonTextReader = new JsonTextReader(sr);
-            var content = serializer.Deserialize<CWDDocumentData>(jsonTextReader);
+                content.NOKAntwoorden = JsonConvert.DeserializeObject<IEnumerable<NOKAntwoord>>(content.NOKAntwoordenString);
+                content.OverigeAntwoorden = JsonConvert.DeserializeObject<IEnumerable<OverigAntwoord>>(content.OtherAntwoordenString);
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
 
+            migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
             var path = await migraDocService.CreateMigraDocPdf(content);
-
             return new FileContentResult(File.ReadAllBytes(path), "application/pdf")
             {
                 FileDownloadName = "Export.pdf"

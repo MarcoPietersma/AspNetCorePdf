@@ -69,13 +69,13 @@ internal class DocumentConstructor
     {
         // Get the predefined style Normal.
         var style = document.Styles["Normal"];
-        // Because all styles are derived from Normal, the next line changes the font of the
-        // whole document. Or, more exactly, it changes the font of all styles and paragraphs
-        // that do not redefine the font.
-        style.Font.Name = "Segoe UI";
+        // Because all styles are derived from Normal, the next line changes the font of the whole
+        // document. Or, more exactly, it changes the font of all styles and paragraphs that do not
+        // redefine the font.
+        style.Font.Name = "OpenSans";
 
-        // Heading1 to Heading9 are predefined styles with an outline level. An outline level
-        // other than OutlineLevel.BodyText automatically creates the outline (or bookmarks) in PDF.
+        // Heading1 to Heading9 are predefined styles with an outline level. An outline level other
+        // than OutlineLevel.BodyText automatically creates the outline (or bookmarks) in PDF.
 
         style = document.Styles["Heading1"];
         style.Font.Size = 14;
@@ -135,9 +135,8 @@ internal class DocumentConstructor
 
         // Add paragraph to footer for odd pages.
         section.Footers.Primary.Add(paragraph);
-        // Add clone of paragraph to footer for odd pages. Cloning is necessary because an
-        // object must not belong to more than one other object. If you forget cloning an
-        // exception is thrown.
+        // Add clone of paragraph to footer for odd pages. Cloning is necessary because an object
+        // must not belong to more than one other object. If you forget cloning an exception is thrown.
         section.Footers.EvenPage.Add(paragraph.Clone());
     }
 

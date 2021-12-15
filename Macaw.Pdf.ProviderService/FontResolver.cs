@@ -1,6 +1,7 @@
-﻿using System;
+﻿using PdfSharp.Fonts;
+using System;
+using System.Diagnostics;
 using System.IO;
-using PdfSharp.Fonts;
 
 namespace Macaw.Pdf
 {
@@ -31,6 +32,7 @@ namespace Macaw.Pdf
 
         public FontResolverInfo ResolveTypeface(string familyName, bool isBold, bool isItalic)
         {
+            Debug.WriteLine($"Trying to resolve {familyName},{isBold},{isItalic}");
             if (familyName.Equals("OpenSans", StringComparison.CurrentCultureIgnoreCase))
             {
                 if (isBold && isItalic)

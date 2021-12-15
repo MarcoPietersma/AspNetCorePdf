@@ -1,4 +1,5 @@
 ﻿using Macaw.Pdf.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +9,9 @@ namespace Macaw.Pdf.Documents.CWD
     {
         public IEnumerable<Bijlage> Bijlages { get; set; }
         public string DocumentName { get; set; }
-        public int HandtekeningInspecteurId { get; set; }
-        public int HandtekeningManagerId { get; set; }
-
+        public Guid? HandtekeningInspecteurId { get; set; }
+        public Guid? HandtekeningManagerId { get; set; }
+        public string Inspecteur { get; set; }
         public DateTime InspectieDatum { get; set; }
 
         public string InspectieNummer { get; set; }
@@ -20,9 +21,21 @@ namespace Macaw.Pdf.Documents.CWD
         public string Klant { get; set; }
 
         public string Manager { get; set; }
+
+        [JsonIgnore]
         public IEnumerable<NOKAntwoord> NOKAntwoorden { get; set; }
+
+        [JsonProperty("NOKAntwoorden")]
+        public string NOKAntwoordenString { get; set; }
+
         public string ObjectNummer { get; set; }
+
         public string Opmerkingen { get; set; }
+
+        [JsonProperty("otherAntwoorden")]
+        public string OtherAntwoordenString { get; set; }
+
+        [JsonIgnore]
         public IEnumerable<OverigAntwoord> OverigeAntwoorden { get; set; }
     }
 }
