@@ -172,6 +172,9 @@ internal class DocumentConstructor
 
     private async Task InjectAddemdums()
     {
+        if (data.Bijlages == null) { 
+            return;
+        }
         foreach (var bijlage in data.Bijlages)
         {
             var paragraph = document.LastSection.AddParagraph();
@@ -252,7 +255,7 @@ internal class DocumentConstructor
             paragraph.Format.Alignment = ParagraphAlignment.Left;
             paragraph.Format.Font.Bold = true;
             paragraph.Style = "QuestionHeader";
-            paragraph.AddText(item.Vraag);
+            paragraph.AddText(item.VraagTekst);
 
             paragraph = document.LastSection.AddParagraph();
             paragraph.Format.SpaceAfter = "2cm";
