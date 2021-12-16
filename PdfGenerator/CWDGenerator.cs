@@ -72,11 +72,13 @@ namespace Macaw.Pdf
                 { nameof(CWDDocument.Inspecteur), CWDDocument.Inspecteur }
             };
 
-            await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
-                "Nieuw Inspectie Rapport",
-                 $"Hierbij een nieuw inspectie rapport van {{{{{nameof(CWDDocument.Inspecteur)}}}}}",
-                 properties,
-                 path);
+            //await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
+            //    "Nieuw Inspectie Rapport",
+            //     $"Hierbij een nieuw inspectie rapport van {{{{{nameof(CWDDocument.Inspecteur)}}}}}",
+            //     properties,
+            //     path);
+            var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm") + ".pdf");
+            File.Copy(path, filename, true);
 
             return new OkResult();
         }

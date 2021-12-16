@@ -4,7 +4,9 @@ using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using System;
+using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Macaw.Pdf;
@@ -33,6 +35,7 @@ public class CWDMigraDocService<T> : MigraDocService<T> where T : IPdfData
 /// </summary>
 internal class DocumentConstructor
 {
+    private const string marginLeft = "3cm";
     private readonly string _imagesPath = ".\\Images";
 
     private readonly ICWDStorageRepository cWDStorageRepository;
@@ -44,6 +47,7 @@ internal class DocumentConstructor
         this.document = new Document();
         this.data = data;
         this.cWDStorageRepository = cWDStorageRepository;
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
     }
 
     public async Task<Document> Create()
@@ -105,15 +109,15 @@ internal class DocumentConstructor
         style.Font.Size = 10;
         style.Font.Bold = true;
         style.Font.Italic = true;
-        style.ParagraphFormat.SpaceBefore = 6;
-        style.ParagraphFormat.SpaceAfter = 3;
+        style.ParagraphFormat.SpaceBefore = 1;
+        style.ParagraphFormat.SpaceAfter = 2;
 
         style = document.Styles["QuestionBody"];
         style.Font.Size = 10;
         style.Font.Bold = true;
         style.Font.Italic = true;
-        style.ParagraphFormat.SpaceBefore = 6;
-        style.ParagraphFormat.SpaceAfter = 3;
+        style.ParagraphFormat.SpaceBefore = 1;
+        style.ParagraphFormat.SpaceAfter = 2;
     }
 
     private void DefineContentSection()
@@ -146,19 +150,78 @@ internal class DocumentConstructor
 
         var section = document.AddSection();
 
+        section.PageSetup.TopMargin = 0;
+        section.PageSetup.BottomMargin = 0;
+        section.PageSetup.LeftMargin = 0;
+        section.PageSetup.RightMargin = 0;
         var image = section.AddImage(await FetchImageFromStorage("CoverImage"));
         image.RelativeHorizontal = RelativeHorizontal.Page;
         image.RelativeVertical = RelativeVertical.Paragraph;
-        image.Left = ShapePosition.Left;
+        image.Left = 0;
         image.Width = "21cm";
-        image.Top = ShapePosition.Top;
+        image.Height = "29,6cm";
+        image.Top = 0;
 
-        var tf = document.LastSection.AddTextFrame();
-        tf.Left = ShapePosition.Center;
-        tf.Top = ShapePosition.Center;
-        tf.Height = "100pt";
-        tf.Width = "100pt";
-        tf.FillFormat.Color = Colors.DarkGray;
+        
+
+        image = section.AddImage(await FetchImageFromStorage("CWDInverse"));
+        image.RelativeHorizontal = RelativeHorizontal.Page;
+        image.RelativeVertical = RelativeVertical.Page;
+        image.Left = marginLeft;
+        image.Width = "11cm";
+        image.Top = 0;
+
+        var tf = section.AddTextFrame();
+        tf.Left = marginLeft;
+        tf.Top = "8cm";
+        tf.Width = "16cm";
+        // tf.LineFormat = new LineFormat() { DashStyle = DashStyle.Solid, Color =
+        // Color.FromRgb(255, 0, 0), Width = "1pt" };
+        tf.RelativeHorizontal = RelativeHorizontal.Page;
+        tf.RelativeVertical = RelativeVertical.Page;
+        var p = tf.AddParagraph();
+
+        p.Format.Alignment = ParagraphAlignment.Left;
+        p.Style = "Normal";
+        p.Format.Font.Size = "18pt";
+        p.Format.Font.Color = Colors.White;
+        p.AddFormattedText($"Inspectie Raport", new Font { Size = "42pt" });
+        p.AddLineBreak();
+        p.AddFormattedText($"{data.Klant}", new Font { Size = "42pt", Bold = true });
+        p.AddLineBreak();
+        p.AddLineBreak();
+        p.AddFormattedText($"{data.InspectieTemplateNaam} - {data.InspectieNummer}", new Font { Size = "18pt" });
+
+        tf = section.AddTextFrame();
+        tf.Left = marginLeft;
+        tf.Top = "25cm";
+        tf.Width = "10cm";
+        tf.RelativeHorizontal = RelativeHorizontal.Page;
+        tf.RelativeVertical = RelativeVertical.Page;
+
+        p = tf.AddParagraph();
+        p.Style = "Normal";
+        p.Format.Font.Size = "14pt";
+        p.Format.Font.Color = Colors.White;
+        p.Style = "Normal";
+        p.AddFormattedText("Datum van Inspectie:", new Font() { Bold = true });
+        p.AddLineBreak();
+        p.AddText(data.InspectieDatum.ToShortDateString());
+
+        tf = section.AddTextFrame();
+        tf.Left = "12cm";
+        tf.Top = "25cm";
+        tf.Width = "10cm";
+        tf.RelativeHorizontal = RelativeHorizontal.Page;
+        tf.RelativeVertical = RelativeVertical.Page;
+
+        p = tf.AddParagraph();
+        p.Style = "Normal";
+        p.Format.Font.Size = "14pt";
+        p.Format.Font.Color = Colors.White;
+        p.AddFormattedText("Inspecteur:", new Font() { Bold = true });
+        p.AddLineBreak();
+        p.AddText(data.Inspecteur);
     }
 
     private async Task DefineMainContentSection()
@@ -172,7 +235,8 @@ internal class DocumentConstructor
 
     private async Task InjectAddemdums()
     {
-        if (data.Bijlages == null) { 
+        if (data.Bijlages == null)
+        {
             return;
         }
         foreach (var bijlage in data.Bijlages)
@@ -239,7 +303,7 @@ internal class DocumentConstructor
         paragraph.Format.Alignment = ParagraphAlignment.Right;
 
         var image = paragraph.AddImage(await FetchImageFromStorage("cwdlogo"));
-        image.Width = "250pt";
+        image.Width = "150pt";
     }
 
     private void InjectOtherQuestions()

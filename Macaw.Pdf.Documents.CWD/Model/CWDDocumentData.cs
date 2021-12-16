@@ -22,8 +22,8 @@ namespace Macaw.Pdf.Documents.CWD
         public DateTime InspectieDatum { get; set; }
         public string InspectieNummer { get; set; }
 
+        public Guid? InspectieTemplateId { get; set; }
         public string InspectieTemplateNaam { get; set; }
-
         public string Klant { get; set; }
 
         public string Manager { get; set; }

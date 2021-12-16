@@ -37,19 +37,19 @@ namespace Macaw.Pdf
             {
                 if (isBold && isItalic)
                 {
-                    return new FontResolverInfo($"{_resourcesPath}\\Tinos-BoldItalic.ttf");
+                    return new FontResolverInfo($"{_resourcesPath}\\OpenSans-BoldItalic.ttf");
                 }
                 else if (isBold)
                 {
-                    return new FontResolverInfo($"{_resourcesPath}\\Tinos-Bold.ttf");
+                    return new FontResolverInfo($"{_resourcesPath}\\OpenSans-Bold.ttf");
                 }
                 else if (isItalic)
                 {
-                    return new FontResolverInfo($"{_resourcesPath}\\Tinos-Italic.ttf");
+                    return new FontResolverInfo($"{_resourcesPath}\\OpenSans-Italic.ttf");
                 }
                 else
                 {
-                    return new FontResolverInfo($"{_resourcesPath}\\Tinos-Regular.ttf");
+                    return new FontResolverInfo($"{_resourcesPath}\\OpenSans-Regular.ttf");
                 }
             }
             return null;

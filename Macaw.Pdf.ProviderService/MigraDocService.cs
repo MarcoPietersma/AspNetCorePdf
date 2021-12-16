@@ -27,7 +27,8 @@ public abstract class MigraDocService<T> : IMigraDocService<T> where T : IPdfDat
     public async Task<string> CreateMigraDocPdf(T pdfData)
     {
         // Create a MigraDoc document
-        GlobalFontSettings.FontResolver = new FontResolver(FontDirectory);
+        if (GlobalFontSettings.FontResolver == null)
+            GlobalFontSettings.FontResolver = new FontResolver(FontDirectory);
         var document = await CreateDocument(pdfData);
         var mdddlName = $"{_createdDocsPath}/{pdfData.DocumentName}-{DateTime.UtcNow.ToOADate()}.mdddl";
         var docName = $"{_createdDocsPath}/{pdfData.DocumentName}-{DateTime.UtcNow.ToOADate()}.pdf";
