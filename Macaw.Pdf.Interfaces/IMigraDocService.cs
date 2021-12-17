@@ -11,6 +11,8 @@ namespace Macaw.Pdf
             get; set;
         }
 
+        void Clean(T pdfData);
+
         Task<Document> CreateDocument(T pdfData);
 
         Task<string> CreateMigraDocPdf(T pdfData);

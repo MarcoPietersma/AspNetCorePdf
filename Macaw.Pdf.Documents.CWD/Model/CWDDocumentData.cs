@@ -16,12 +16,12 @@ namespace Macaw.Pdf.Documents.CWD
         [JsonProperty("e-mailrapport")]
         public string EmailRapport { get; set; }
 
+        public DateTime? HandtekeningDatum { get; set; }
         public Guid? HandtekeningInspecteurId { get; set; }
         public Guid? HandtekeningManagerId { get; set; }
         public string Inspecteur { get; set; }
-        public DateTime InspectieDatum { get; set; }
+        public DateTime? InspectieDatum { get; set; }
         public string InspectieNummer { get; set; }
-
         public Guid? InspectieTemplateId { get; set; }
         public string InspectieTemplateNaam { get; set; }
         public string Klant { get; set; }

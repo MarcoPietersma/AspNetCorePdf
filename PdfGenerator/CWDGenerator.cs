@@ -72,14 +72,14 @@ namespace Macaw.Pdf
                 { nameof(CWDDocument.Inspecteur), CWDDocument.Inspecteur }
             };
 
-            //await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
-            //    "Nieuw Inspectie Rapport",
-            //     $"Hierbij een nieuw inspectie rapport van {{{{{nameof(CWDDocument.Inspecteur)}}}}}",
-            //     properties,
-            //     path);
-            var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm") + ".pdf");
-            File.Copy(path, filename, true);
-
+            await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
+                "Nieuw Inspectie Rapport",
+                 $"Hierbij een nieuw inspectie rapport van {{{nameof(CWDDocument.Inspecteur)}}}",
+                 properties,
+                 path);
+            // var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
+            // + ".pdf"); File.Copy(path, filename, true);
+            //migraDocService.Clean(CWDDocument);
             return new OkResult();
         }
 
@@ -133,7 +133,7 @@ namespace Macaw.Pdf
             var bytes = Convert.FromBase64String(image["foto"].Value<string>());
             var contents = new StreamContent(new MemoryStream(bytes));
 
-            await storageRepository.WriteFileToStorage(fotoId, ".png", contents.ReadAsStream());
+            await storageRepository.WriteFileToStorage("docatt/" + fotoId, "png", contents.ReadAsStream());
 
             return new OkResult();
         }

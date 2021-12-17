@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Macaw.Pdf.Documents.CWD
 {
     public class NOKAntwoord
     {
-        public string Vraag { get; set; }
         public string Antwoord { get; set; }
         public IEnumerable<Foto> Fotos { get; set; }
+        public string VraagTekst { get; set; }
     }
 }

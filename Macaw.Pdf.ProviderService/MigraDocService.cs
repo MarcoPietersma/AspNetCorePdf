@@ -22,6 +22,21 @@ public abstract class MigraDocService<T> : IMigraDocService<T> where T : IPdfDat
 
     public string FontDirectory { get; set; } = ".\\Resources";
 
+    public void Clean(T pdfData)
+    {
+        var mdddlName = $"{_createdDocsPath}/{pdfData.DocumentName}-{DateTime.UtcNow.ToOADate()}.mdddl";
+        var docName = $"{_createdDocsPath}/{pdfData.DocumentName}-{DateTime.UtcNow.ToOADate()}.pdf";
+
+        try
+        {
+            File.Delete(mdddlName);
+            File.Delete(docName);
+        }
+        catch
+        {
+        }
+    }
+
     public abstract Task<Document> CreateDocument(T pdfData);
 
     public async Task<string> CreateMigraDocPdf(T pdfData)

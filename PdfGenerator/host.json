@@ -2,12 +2,14 @@
   "version": "2.0",
   "logging": {
     "LogLevel": {
-      "default": "Warning",
-      "Function": "Error"
+      "System.Net": "Warning",
+      "default": "Information",
+      "Function": "Warning",
+      "System": "Warning"
     },
     "applicationInsights": {
       "samplingSettings": {
-        "isEnabled": true,
+        "isEnabled": false,
         "excludedTypes": "Request"
       }
     }

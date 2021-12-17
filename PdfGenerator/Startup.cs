@@ -24,7 +24,7 @@ namespace Macaw.Pdf
             // services.AddScoped<IPdfSharpService, DemoPdfSharpService>();
             services.AddScoped<IMigraDocService<DemoDocumentData>, DemoMigraDocService<DemoDocumentData>>();
             services.AddScoped<IMigraDocService<CWDDocumentData>, CWDMigraDocService<CWDDocumentData>>();
-            services.AddScoped<ICWDStorageRepository, CWDStorageRepository>();
+            services.AddSingleton<ICWDStorageRepository, CWDStorageRepository>();
             services.AddScoped<ISendGridService, SendGridService>();
             services.AddSendGrid(options => options.ApiKey = config["SendGridApiKey"]);
         }

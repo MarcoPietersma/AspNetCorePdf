@@ -5,6 +5,7 @@
     using Macaw.Pdf.Interfaces;
     using Microsoft.Extensions.Configuration;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -13,6 +14,7 @@
     public class CWDStorageRepository : ICWDStorageRepository
     {
         private const string ContainerName = "cwd";
+        private static volatile bool HasBeenChecked = false;
         private readonly IConfiguration _configuration;
 
         public CWDStorageRepository(IConfiguration configuration)
@@ -58,7 +60,11 @@
         {
             var blobServiceClient = new BlobServiceClient(_configuration["AzureWebJobsStorage"]);
             var container = blobServiceClient.GetBlobContainerClient(ContainerName);
-            await container.CreateIfNotExistsAsync();
+            if (!HasBeenChecked)
+            {
+                await container.CreateIfNotExistsAsync();
+                HasBeenChecked = true;
+            }
 
             return container;
         }
@@ -69,7 +75,8 @@
             var file = files.SingleOrDefault(e => e.StartsWith($"{reference}.", System.StringComparison.InvariantCultureIgnoreCase));
             if (string.IsNullOrEmpty(file))
             {
-                throw new FileNotFoundException("Blob not found", reference);
+                Trace.TraceError($"File with to {reference} was not found ");
+                throw new FileNotFoundException($"Blob not found {reference}", reference);
             }
 
             return file;
