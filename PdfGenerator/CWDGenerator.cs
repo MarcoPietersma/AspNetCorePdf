@@ -130,7 +130,11 @@ namespace Macaw.Pdf
 
             var image = JToken.ReadFrom(jsonTextReader);
             var fotoId = image["fotoId"].Value<string>();
-            var bytes = Convert.FromBase64String(image["foto"].Value<string>());
+            var base64FotoString = image["foto"].Value<string>();
+            if (string.IsNullOrEmpty(base64FotoString))
+                return new BadRequestObjectResult("no Base64 content in message");
+
+            var bytes = Convert.FromBase64String(base64FotoString);
             var contents = new StreamContent(new MemoryStream(bytes));
 
             await storageRepository.WriteFileToStorage("docatt/" + fotoId, "png", contents.ReadAsStream());
