@@ -72,14 +72,18 @@ namespace Macaw.Pdf
                 { nameof(CWDDocument.Inspecteur), CWDDocument.Inspecteur }
             };
 
+#if !DEBUG
+
             await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(CWDDocument.EmailRapport, CWDDocument.Manager),
                 "Nieuw Inspectie Rapport",
                  $"Hierbij een nieuw inspectie rapport van {{{nameof(CWDDocument.Inspecteur)}}}",
                  properties,
                  path);
-            //var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
-            //+ ".pdf"); File.Copy(path, filename, true);
-            //migraDocService.Clean(CWDDocument);
+#else
+            var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
+            + ".pdf"); File.Copy(path, filename, true);
+            migraDocService.Clean(CWDDocument);
+#endif
             return new OkResult();
         }
 

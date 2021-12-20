@@ -178,7 +178,7 @@ namespace Macaw.Pdf
             p.Style = "Normal";
             p.Format.Font.Size = "18pt";
             p.Format.Font.Color = Colors.White;
-            p.AddFormattedText($"Inspectie Raport", new Font { Size = "42pt" });
+            p.AddFormattedText($"Inspectie Rapport", new Font { Size = "42pt" });
             p.AddLineBreak();
             p.AddFormattedText($"{data.Klant}", new Font { Size = "42pt", Bold = true });
             p.AddLineBreak();
@@ -280,6 +280,9 @@ namespace Macaw.Pdf
                     }
                     paragraph.AddLineBreak();
                 }
+
+                if (bijlage.BijlageItems.Any())
+                    document.LastSection.AddPageBreak();
             }
         }
 
@@ -357,9 +360,15 @@ namespace Macaw.Pdf
         private void InjectQuestions()
         {
             var paragraph = document.LastSection.AddParagraph();
-
             paragraph.Style = "Header";
-            paragraph.AddText("Niet Oke");
+            paragraph.AddText("Inspectie Rapport");
+
+            paragraph = document.LastSection.AddParagraph();
+            paragraph.Style = "Normal";            
+            paragraph.AddText("Naar aanleiding van de uitgevoerde inspectie zijn onderstaande afwijkingen geconstateerd welke beschouwd zijn als “Niet ok”");
+            paragraph.AddLineBreak();
+            paragraph.AddLineBreak();
+
 
             foreach (var item in data.NOKAntwoorden)
             {
