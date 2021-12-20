@@ -135,9 +135,8 @@ namespace Macaw.Pdf
 
             style = document.Styles["Footer"];
             style.ParagraphFormat.TabStops.ClearAll();
-           // style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(80), TabAlignment.Center);
+            // style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(80), TabAlignment.Center);
             style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(158), TabAlignment.Right);
-
         }
 
         private async Task DefineCover()
@@ -292,7 +291,7 @@ namespace Macaw.Pdf
             paragraph.Style = "Footer";
             paragraph.AddPageField();
             paragraph.AddTab();
-            paragraph.AddFormattedText("Intelligentie door technologie",new Font() { Color= Colors.LightGray, Size="14pt" });
+            paragraph.AddFormattedText("Intelligentie door technologie", new Font() { Color = Colors.LightGray, Size = "14pt" });
         }
 
         private void InjectGeneralRemarks()
@@ -339,9 +338,8 @@ namespace Macaw.Pdf
         {
             var paragraph = document.LastSection.AddParagraph();
 
-            paragraph.Format.Font.Size = "21pt";
+            paragraph.Style = "Header";
             paragraph.AddText("Overige vragen");
-            paragraph.Format.SpaceAfter = "2cm";
             foreach (var item in data.OverigeAntwoorden)
             {
                 paragraph = document.LastSection.AddParagraph();
