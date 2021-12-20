@@ -80,7 +80,7 @@ namespace Macaw.Pdf
             //var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
             //+ ".pdf"); File.Copy(path, filename, true);
             //migraDocService.Clean(CWDDocument);
-            //return new OkResult();
+            return new OkResult();
         }
 
         [FunctionName(FunctionNamePrefix + nameof(FetchImage))]
