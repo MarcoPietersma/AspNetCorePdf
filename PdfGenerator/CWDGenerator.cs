@@ -77,10 +77,10 @@ namespace Macaw.Pdf
                  $"Hierbij een nieuw inspectie rapport van {{{nameof(CWDDocument.Inspecteur)}}}",
                  properties,
                  path);
-            // var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
-            // + ".pdf"); File.Copy(path, filename, true);
+            //var filename = Path.Combine("d:\\temp\\cwd\\", DateTime.Now.ToString("yyyyMMddHHmm")
+            //+ ".pdf"); File.Copy(path, filename, true);
             //migraDocService.Clean(CWDDocument);
-            return new OkResult();
+            //return new OkResult();
         }
 
         [FunctionName(FunctionNamePrefix + nameof(FetchImage))]

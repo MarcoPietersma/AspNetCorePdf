@@ -108,12 +108,20 @@ namespace Macaw.Pdf
 
             document.Styles.AddStyle("QuestionHeader", "Normal");
             document.Styles.AddStyle("QuestionBody", "Normal");
+            document.Styles.AddStyle("Header", "Normal");
+            document.Styles.AddStyle("Footer", "Normal");
+
+            style = document.Styles["Header"];
+            style.Font.Size = "14pt";
+            style.Font.Bold = false;
+            style.Font.Italic = false;
+            style.ParagraphFormat.SpaceAfter = "1cm";
 
             style = document.Styles["QuestionHeader"];
-
             style.Font.Size = 10;
             style.Font.Bold = true;
-            style.Font.Italic = true;
+            style.Font.Italic = false;
+            style.ParagraphFormat.SpaceAfter = "1cm";
 
             style.ParagraphFormat.SpaceBefore = "0.1cm";
             style.ParagraphFormat.SpaceAfter = "0.2cm";
@@ -124,6 +132,12 @@ namespace Macaw.Pdf
             style.Font.Italic = false;
             style.ParagraphFormat.SpaceBefore = "0cm";
             style.ParagraphFormat.SpaceAfter = "1cm";
+
+            style = document.Styles["Footer"];
+            style.ParagraphFormat.TabStops.ClearAll();
+           // style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(80), TabAlignment.Center);
+            style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(158), TabAlignment.Right);
+
         }
 
         private async Task DefineCover()
@@ -250,14 +264,14 @@ namespace Macaw.Pdf
             foreach (var bijlage in data.Bijlages)
             {
                 var paragraph = document.LastSection.AddParagraph();
-
-                paragraph.AddFormattedText($"Bijlage {bijlage.Nummer}: {bijlage.Titel}", new Font { Size = "21pt" });
-                paragraph.AddLineBreak();
-                paragraph.AddLineBreak();
+                paragraph.Style = "Header";
+                paragraph.AddText($"Bijlage {bijlage.Nummer}: {bijlage.Titel}");
 
                 foreach (var item in bijlage.BijlageItems)
                 {
-                    paragraph.AddFormattedText(item.Tekst, new Font() { Bold = true });
+                    paragraph = document.LastSection.AddParagraph();
+                    paragraph.Style = "QuestionHeader";
+                    paragraph.AddFormattedText(item.Tekst);
                     paragraph.AddLineBreak();
                     foreach (var reference in item.Fotos)
                     {
@@ -274,23 +288,23 @@ namespace Macaw.Pdf
         {
             var MainSection = document.Sections[0];
             var paragraph = MainSection.Footers.Primary.AddParagraph();
-            paragraph.AddTab();
+
+            paragraph.Style = "Footer";
             paragraph.AddPageField();
+            paragraph.AddTab();
+            paragraph.AddFormattedText("Intelligentie door technologie",new Font() { Color= Colors.LightGray, Size="14pt" });
         }
 
         private void InjectGeneralRemarks()
         {
             var paragraph = document.LastSection.AddParagraph();
 
-            paragraph.Format.Font.Size = "21pt";
+            paragraph.Style = "Header";
             paragraph.AddText("Algemene Opmerkingen");
-            paragraph.Format.SpaceAfter = "1cm";
             paragraph = document.LastSection.AddParagraph();
 
             paragraph.Style = "QuestionBody";
             paragraph.AddText(data.Opmerkingen);
-            paragraph.Format.Borders.Bottom = new Border() { Color = Colors.DarkGray, Width = "1pt" };
-            paragraph.Format.SpaceAfter = "2cm";
         }
 
         private async Task InjectHeader()
@@ -346,10 +360,8 @@ namespace Macaw.Pdf
         {
             var paragraph = document.LastSection.AddParagraph();
 
-            paragraph.Format.SpaceBefore = "4cm";
-            paragraph.Format.Font.Size = "21pt";
-            paragraph.AddText("Niet Oke(andere tekst)");
-            paragraph.Format.SpaceAfter = "2cm";
+            paragraph.Style = "Header";
+            paragraph.AddText("Niet Oke");
 
             foreach (var item in data.NOKAntwoorden)
             {
