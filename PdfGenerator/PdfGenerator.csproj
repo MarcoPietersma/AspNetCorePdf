@@ -20,6 +20,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Macaw.Pdf.Documents.CWD\Macaw.Pdf.Documents.CWD.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Documents.Demo\Macaw.Pdf.Documents.Demo.csproj" />
+	  <ProjectReference Include="..\Macaw.Pdf.Documents.Thurlede\Macaw.Pdf.Documents.Thurlede.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Interfaces\Macaw.Pdf.Interfaces.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.Model\Macaw.Pdf.Model.csproj" />
 	  <ProjectReference Include="..\Macaw.Pdf.ProviderService\Macaw.Pdf.ProviderService.csproj" />

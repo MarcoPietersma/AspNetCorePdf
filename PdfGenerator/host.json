@@ -3,7 +3,7 @@
   "logging": {
     "LogLevel": {
       "System.Net": "Warning",
-      "default": "Information",
+      "default": "Warning",
       "Function": "Warning",
       "System": "Warning"
     },

@@ -1,4 +1,5 @@
 ﻿using Macaw.Pdf.Documents.CWD;
+using Macaw.Pdf.Documents.Thurlede.Model;
 using Macaw.Pdf.Interfaces;
 using Macaw.Pdf.Model;
 using Macaw.Pdf.Services;
@@ -24,7 +25,10 @@ namespace Macaw.Pdf
             // services.AddScoped<IPdfSharpService, DemoPdfSharpService>();
             services.AddScoped<IMigraDocService<DemoDocumentData>, DemoMigraDocService<DemoDocumentData>>();
             services.AddScoped<IMigraDocService<CWDDocumentData>, CWDMigraDocService<CWDDocumentData>>();
+            services.AddScoped<IMigraDocService<WachtlijstFactuur>, ThurledeMigraDocService<WachtlijstFactuur>>();
             services.AddSingleton<ICWDStorageRepository, CWDStorageRepository>();
+            services.AddSingleton<IThurledeStorageRepository, ThurledeStorageRepository>();
+            
             services.AddScoped<ISendGridService, SendGridService>();
             services.AddSendGrid(options => options.ApiKey = config["SendGridApiKey"]);
         }
