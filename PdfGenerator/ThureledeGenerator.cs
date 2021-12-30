@@ -48,8 +48,9 @@ namespace Macaw.Pdf
             {
                 var serializer = new JsonSerializer();
                 using var sr = new StreamReader(req.Body);
-                using var jsonTextReader = new JsonTextReader(sr);
-                ThurledeDocument = serializer.Deserialize<WachtlijstFactuur>(jsonTextReader);
+                var BodyText = await sr.ReadToEndAsync();
+
+                ThurledeDocument = JsonConvert.DeserializeObject<WachtlijstFactuur>(BodyText);
             }
             catch (System.Exception ex)
             {
@@ -71,7 +72,16 @@ namespace Macaw.Pdf
             + ".pdf"); File.Copy(path, filename, true);
             migraDocService.Clean(ThurledeDocument);
 #endif
-            return new OkResult();
+
+            try
+            {
+                var responseStream = File.OpenRead(path);
+                return new FileStreamResult(responseStream, "application/pdf");
+            }
+            catch (FileNotFoundException)
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }
