@@ -1,5 +1,6 @@
 ﻿using Macaw.Pdf.Documents.Thurlede.Model;
 using Macaw.Pdf.Interfaces;
+using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using System;
 using System.Globalization;
@@ -12,17 +13,19 @@ namespace Macaw.Pdf
     /// <summary>
     /// non generic class for hotreload in dotnet 6
     /// </summary>
-    internal class WachtLijstFactuurDocumentConstructor
+    internal class ThurledeFactuurDocumentConstructor
     {
         private const string bodyMarginLeft = "1cm";
         private const string MarginLeftRight = "1cm";
         private readonly string _imagesPath = ".\\Images";
 
         private readonly IThurledeStorageRepository ThurledeStorageRepository;
-        private WachtlijstFactuur data;
+        private ThurledeFactuur data;
         private Document document;
 
-        public WachtLijstFactuurDocumentConstructor(WachtlijstFactuur data, IThurledeStorageRepository ThurledeStorageRepository)
+        private Action<Document, IPdfData> OnInjectBodyText;
+
+        public ThurledeFactuurDocumentConstructor(ThurledeFactuur data, IThurledeStorageRepository ThurledeStorageRepository)
         {
             this.document = new Document();
             document.DefaultPageSetup.LeftMargin = bodyMarginLeft;
@@ -32,8 +35,9 @@ namespace Macaw.Pdf
             Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
         }
 
-        public async Task<Document> Create()
+        public async Task<Document> Create(Action<Document, IPdfData> onInjectBodyText)
         {
+            OnInjectBodyText = onInjectBodyText;
             DefineStyles();
             await DefineMainContentSection();
             return document;
@@ -165,31 +169,12 @@ namespace Macaw.Pdf
             p.Format.SpaceBefore = "1cm";
             p.AddText($"Datum :{data.InvoiceDate.ToShortDateString()}"); p.AddLineBreak();
             p.AddText($"Referentie : {data.PaymentReference}"); p.AddLineBreak();
-            p.AddText($"Betreft : Wachtlijst contributie"); p.AddLineBreak();
+            p.AddText($"Betreft : {data.Subject}"); p.AddLineBreak();
 
             p = document.LastSection.AddParagraph();
             p.Format.SpaceBefore = "1cm";
-            var bodyText = $@"Beste {data.Name},
 
-Volgens onze administratie staat u bij ons ingeschreven voor een volkstuin, per jaar vragen wij een bijdrage om lid te blijven. Dit doen we om de wachtlijst accuraat te houden. Het bedrag wat u betaald heeft met de eerste inschrijving is ten gunste van de vereniging. Het bedrag wat wij nu in rekening brengen (en eventueel volgende jaren) wordt verrekend met de aanschaf van het huisje.
-
-Ik verzoek daarom dan ook of uw {data.Amount:c2} aan de volkstuin over te maken, u kunt dit bedrag overmaken op
-
-NL64INGB0000470288 t.n.v. Schiedamse volkstuin vereniging Thurlede
-wilt u de bij de betaling dit het volgende factuurnummer vermelden
-
-{data.PaymentReference}
-
-Ter verificatie kunt u de bankgegevens controleren op de onze website:
-Contact | Volkstuinvereniging Thurlede (svthurlede.nl)
-
-Mochten wij voor {data.DueDate.ToShortDateString()} geen betaling hebben ontvangen van u, dan gaan wij er vanuit dat u niet (langer) geïnteresseerd bent in een volkstuin bij Thurlede en wordt u van de wachtlijst verwijderd.
-
-Met vriendelijke groet
-
-Marco Pietersma
-Penningmeester";
-            p.AddText(bodyText); p.AddLineBreak();
+            OnInjectBodyText?.Invoke(document, data);
         }
     }
 }

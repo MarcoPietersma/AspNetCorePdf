@@ -364,11 +364,10 @@ namespace Macaw.Pdf
             paragraph.AddText("Inspectie Rapport");
 
             paragraph = document.LastSection.AddParagraph();
-            paragraph.Style = "Normal";            
+            paragraph.Style = "Normal";
             paragraph.AddText("Naar aanleiding van de uitgevoerde inspectie zijn onderstaande afwijkingen geconstateerd welke beschouwd zijn als “Niet ok”");
             paragraph.AddLineBreak();
             paragraph.AddLineBreak();
-
 
             foreach (var item in data.NOKAntwoorden)
             {

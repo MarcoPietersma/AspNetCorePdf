@@ -1,5 +1,4 @@
-﻿using Macaw.Pdf.Interfaces;
-using Macaw.Pdf.Model;
+﻿using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes.Charts;
 using MigraDoc.DocumentObjectModel.Tables;

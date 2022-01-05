@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -17,11 +16,11 @@ namespace Macaw.Pdf
     {
         private const string FunctionNamePrefix = "Thurlede";
         private readonly ILogger<ThurledeGenerator> logger;
-        private readonly IMigraDocService<WachtlijstFactuur> migraDocService;
+        private readonly IMigraDocService<ThurledeFactuur> migraDocService;
         private readonly ISendGridService sendGridService;
         private readonly IThurledeStorageRepository storageRepository;
 
-        public ThurledeGenerator(ILogger<ThurledeGenerator> logger, IMigraDocService<WachtlijstFactuur> migraDocService, IThurledeStorageRepository storageRepository, ISendGridService sendGridService)
+        public ThurledeGenerator(ILogger<ThurledeGenerator> logger, IMigraDocService<ThurledeFactuur> migraDocService, IThurledeStorageRepository storageRepository, ISendGridService sendGridService)
         {
             this.logger = logger;
             this.migraDocService = migraDocService;
@@ -51,6 +50,7 @@ namespace Macaw.Pdf
                 var BodyText = await sr.ReadToEndAsync();
 
                 ThurledeDocument = JsonConvert.DeserializeObject<WachtlijstFactuur>(BodyText);
+                ThurledeDocument.DocumentType = nameof(WachtlijstFactuur);
             }
             catch (System.Exception ex)
             {
@@ -60,18 +60,39 @@ namespace Macaw.Pdf
             migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
             var path = await migraDocService.CreateMigraDocPdf(ThurledeDocument);
 
-#if !DEBUG
+            try
+            {
+                var responseStream = File.OpenRead(path);
+                return new FileStreamResult(responseStream, "application/pdf");
+            }
+            catch (FileNotFoundException)
+            {
+                return new BadRequestResult();
+            }
+        }
 
-            await sendGridService.SendPdfToRecipient(new SendGrid.Helpers.Mail.EmailAddress(ThurledeDocument.EmailRapport, ThurledeDocument.Manager),
-                "Nieuw Inspectie Rapport",
-                 $"Hierbij een nieuw inspectie rapport van {{{nameof(ThurledeDocument.Inspecteur)}}}",
-                 properties,
-                 path);
-#else
-            var filename = Path.Combine("d:\\temp\\Thurlede\\", DateTime.Now.ToString("yyyyMMddHHmm")
-            + ".pdf"); File.Copy(path, filename, true);
-            migraDocService.Clean(ThurledeDocument);
-#endif
+        [FunctionName(FunctionNamePrefix + nameof(WerkbeurtFactuur))]
+        public async Task<IActionResult> WerkbeurtFactuur(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Thurlede/" + nameof(WerkbeurtFactuur))] HttpRequest req, ExecutionContext context)
+        {
+            WerkbeurtFactuur ThurledeDocument = null;
+            try
+            {
+                var serializer = new JsonSerializer();
+                using var sr = new StreamReader(req.Body);
+                var BodyText = await sr.ReadToEndAsync();
+
+                ThurledeDocument = JsonConvert.DeserializeObject<WerkbeurtFactuur>(BodyText);
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+
+            ThurledeDocument.DocumentType = nameof(WerkbeurtFactuur);
+
+            migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
+            var path = await migraDocService.CreateMigraDocPdf(ThurledeDocument);
 
             try
             {

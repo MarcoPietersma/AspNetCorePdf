@@ -25,7 +25,7 @@ namespace Macaw.Pdf
             // services.AddScoped<IPdfSharpService, DemoPdfSharpService>();
             services.AddScoped<IMigraDocService<DemoDocumentData>, DemoMigraDocService<DemoDocumentData>>();
             services.AddScoped<IMigraDocService<CWDDocumentData>, CWDMigraDocService<CWDDocumentData>>();
-            services.AddScoped<IMigraDocService<WachtlijstFactuur>, ThurledeMigraDocService<WachtlijstFactuur>>();
+            services.AddScoped<IMigraDocService<ThurledeFactuur>, ThurledeMigraDocService<ThurledeFactuur>>();
             services.AddSingleton<ICWDStorageRepository, CWDStorageRepository>();
             services.AddSingleton<IThurledeStorageRepository, ThurledeStorageRepository>();
             
