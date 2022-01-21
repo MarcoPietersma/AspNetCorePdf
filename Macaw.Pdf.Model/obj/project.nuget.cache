@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jidwaWtaoz3ot1ChpMKKgYA+FrgPBi3SF56c7Or5nUYcCvj/w42JWhLTKYnbtzg0Xjs2/25oxhED/NEwRtpM2g==",
+  "dgSpecHash": "xM7p6YPZMEiVbjHGp+O6m6gck4ITM3aaOHk46kzFSbdjyqjZsIRlkyalQrRKgBAoJNY7fXCgA9pyZHBJFDplNg==",
   "success": true,
-  "projectFilePath": "D:\\src.PowerPlatform\\PdfGenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj",
+  "projectFilePath": "D:\\src.pdfgenerator\\Macaw.Pdf.Model\\Macaw.Pdf.Model.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
