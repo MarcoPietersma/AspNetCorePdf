@@ -30,7 +30,8 @@ namespace Macaw.Pdf
 
                 var p = document.LastSection.AddParagraph();
                 p.AddText(@"Hierbij doen wij u de rekening toekomen betreffende de ledenbijdrage van uw tuin over het jaar 2022 op ons complex ‘Schiedamse Volkstuinvereniging Thurlede’ zoals onderstaand gespecificeerd.");
-
+                p.AddLineBreak();
+                p.AddLineBreak();
                 var table = document.LastSection.AddTable();
 
                 table.Style = "Table";
@@ -47,6 +48,8 @@ namespace Macaw.Pdf
                 column = table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
 
+                column = table.AddColumn("3.5cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
                 column = table.AddColumn("3.5cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
                 var row = table.AddRow();
@@ -76,12 +79,14 @@ namespace Macaw.Pdf
                 row.Cells[3].AddParagraph(data.InvoiceLines.Sum(e => e.Total).ToString("C2"));
 
                 p = document.LastSection.AddParagraph();
+                p.AddLineBreak();
+
                 p.AddText(
-$@"Het bedrag dient u voor 1 juni {data.InvoiceLines} over te maken o.v.v. {data.PaymentReference} op onze rekening NL64INGB0000470288 t.n.v. Schiedamse Volkstuinvereniging Thurlede.
+$@"Het bedrag dient u voor {data.DueDate.ToShortDateString()} over te maken o.v.v. {data.PaymentReference} op onze rekening NL64INGB0000470288 t.n.v. Schiedamse Volkstuinvereniging Thurlede.
 
 U mag zelf bepalen of u in delen of in 1 keer betaald, wel verwachten we het totale bedrag voor 1 juni op onze rekening. Door de uiterste betaaldatum te verlaten naar na het vakantie geld hebben we besloten geen betaalregelingen meer aan te houden.
 
-Wij hopen binnen kort een website te hebben waar u kunt inzien wat de stand is van uw betaling is.
+Wij hopen binnenkort een website te hebben waar u kunt inzien wat de stand is van uw betaling is.
 
 Met vriendelijke groet
 Marco Pietersma

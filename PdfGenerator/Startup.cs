@@ -28,9 +28,8 @@ namespace Macaw.Pdf
             services.AddScoped<IMigraDocService<ThurledeFactuur>, ThurledeMigraDocService<ThurledeFactuur>>();
             services.AddSingleton<ICWDStorageRepository, CWDStorageRepository>();
             services.AddSingleton<IThurledeStorageRepository, ThurledeStorageRepository>();
-            
+
             services.AddScoped<ISendGridService, SendGridService>();
-            services.AddSendGrid(options => options.ApiKey = config["SendGridApiKey"]);
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
