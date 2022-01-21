@@ -3,6 +3,7 @@ using Macaw.Pdf.Interfaces;
 using Macaw.Pdf.Model;
 using MigraDoc.DocumentObjectModel;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Macaw.Pdf
@@ -14,6 +15,78 @@ namespace Macaw.Pdf
         public ThurledeMigraDocService(IThurledeStorageRepository ThurledeStorageRepository) : base()
         {
             this.ThurledeStorageRepository = ThurledeStorageRepository;
+        }
+
+        public async Task<Document> CreateContributieFactuur(T pdfData)
+        {
+            var data = pdfData as ThurledeFactuur;
+            data.Subject = "Contributie 2022";
+
+            var constructor = new ThurledeFactuurDocumentConstructor(data, ThurledeStorageRepository);
+
+            return await constructor.Create((document, dataObj) =>
+            {
+                var data = pdfData as ContributieFactuur;
+
+                var p = document.LastSection.AddParagraph();
+                p.AddText(@"Hierbij doen wij u de rekening toekomen betreffende de ledenbijdrage van uw tuin over het jaar 2022 op ons complex ‘Schiedamse Volkstuinvereniging Thurlede’ zoals onderstaand gespecificeerd.");
+
+                var table = document.LastSection.AddTable();
+
+                table.Style = "Table";
+
+                table.Borders.Color = Colors.Gray;
+                table.Borders.Width = 0.25;
+                table.Borders.Left.Width = 0.5;
+                table.Borders.Right.Width = 0.5;
+                table.Rows.LeftIndent = 0;
+
+                var column = table.AddColumn("8cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+                column = table.AddColumn("3cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
+                column = table.AddColumn("3.5cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+                var row = table.AddRow();
+                row.HeadingFormat = true;
+                row.Format.Alignment = ParagraphAlignment.Center;
+                row.Format.Font.Bold = true;
+
+                row.Cells[0].AddParagraph("Omschrijving");
+                row.Cells[1].AddParagraph("Aantal");
+                row.Cells[2].AddParagraph("Prijs p.s.");
+                row.Cells[3].AddParagraph("Totaal");
+
+                foreach (var line in data.InvoiceLines)
+                {
+                    row = table.AddRow();
+
+                    row.Cells[0].AddParagraph(line.Description);
+                    row.Cells[1].AddParagraph(line.NumberOfItems.ToString());
+                    row.Cells[2].AddParagraph(line.PricePerItem.ToString("C2"));
+                    row.Cells[3].AddParagraph(line.Total.ToString("C2"));
+                }
+
+                row = table.AddRow();
+
+                var rp = row.Cells[0].AddParagraph();
+                rp.AddFormattedText("Totaal", new Font() { Bold = true });
+                row.Cells[3].AddParagraph(data.InvoiceLines.Sum(e => e.Total).ToString("C2"));
+
+                p = document.LastSection.AddParagraph();
+                p.AddText(
+$@"Het bedrag dient u voor 1 juni {data.InvoiceLines} over te maken o.v.v. {data.PaymentReference} op onze rekening NL64INGB0000470288 t.n.v. Schiedamse Volkstuinvereniging Thurlede.
+
+U mag zelf bepalen of u in delen of in 1 keer betaald, wel verwachten we het totale bedrag voor 1 juni op onze rekening. Door de uiterste betaaldatum te verlaten naar na het vakantie geld hebben we besloten geen betaalregelingen meer aan te houden.
+
+Wij hopen binnen kort een website te hebben waar u kunt inzien wat de stand is van uw betaling is.
+
+Met vriendelijke groet
+Marco Pietersma
+Penningmeester");
+            });
         }
 
         public override async Task<Document> CreateDocument(T pdfData)
@@ -30,6 +103,9 @@ namespace Macaw.Pdf
                 case nameof(WerkbeurtFactuur):
                     return await CreateWerkbeurtFactuur(pdfData);
 
+                case nameof(ContributieFactuur):
+                    return await CreateContributieFactuur(pdfData);
+
                 default:
                     throw new InvalidOperationException($"Documenttype {thurledeDoc.DocumentType} is not supported");
             }
@@ -38,7 +114,7 @@ namespace Macaw.Pdf
         public async Task<Document> CreateWerkbeurtFactuur(T pdfData)
         {
             var data = pdfData as ThurledeFactuur;
-            data.Subject = "Gemiste Werkbeurt"
+            data.Subject = "Gemiste Werkbeurt";
             var constructor = new ThurledeFactuurDocumentConstructor(data, ThurledeStorageRepository);
 
             return await constructor.Create((document, dataObj) =>
@@ -55,7 +131,7 @@ Deze vergoeding is {data.PrijsPerWerkbeurt:C2} per gemiste werkbeurt.
 {data.InvoiceBodyText}
 
 Daardoor doen we u een rekening toekomen voor de gemiste werktbeurten.
-Graag ontvangen wij van u op onze rekening 
+Graag ontvangen wij van u op onze rekening
 NL64INGB0000470288 t.n.v. Schiedamse volkstuin vereniging Thurlede, een bedrag van { data.AantalWerkbeurtenGemist * data.PrijsPerWerkbeurt:C2}
 
 Mocht u het niet eens zijn met deze rekening of mocht de registratie van uw werkbeurten niet kloppen horen wij dat graag van u. U kunt reageren door antwoorden op deze mail.

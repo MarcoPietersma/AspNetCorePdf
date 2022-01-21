@@ -38,58 +38,43 @@ namespace Macaw.Pdf
             return stream;
         }
 
-        [FunctionName(FunctionNamePrefix + nameof(Create))]
-        public async Task<IActionResult> Create(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Thurlede/WachtlijstFactuur")] HttpRequest req, ExecutionContext context)
-        {
-            WachtlijstFactuur ThurledeDocument = null;
-            try
-            {
-                var serializer = new JsonSerializer();
-                using var sr = new StreamReader(req.Body);
-                var BodyText = await sr.ReadToEndAsync();
-
-                ThurledeDocument = JsonConvert.DeserializeObject<WachtlijstFactuur>(BodyText);
-                ThurledeDocument.DocumentType = nameof(WachtlijstFactuur);
-            }
-            catch (System.Exception ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
-
-            migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
-            var path = await migraDocService.CreateMigraDocPdf(ThurledeDocument);
-
-            try
-            {
-                var responseStream = File.OpenRead(path);
-                return new FileStreamResult(responseStream, "application/pdf");
-            }
-            catch (FileNotFoundException)
-            {
-                return new BadRequestResult();
-            }
-        }
-
         [FunctionName(FunctionNamePrefix + nameof(WerkbeurtFactuur))]
         public async Task<IActionResult> WerkbeurtFactuur(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Thurlede/" + nameof(WerkbeurtFactuur))] HttpRequest req, ExecutionContext context)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Thurlede/{FactuurType}")] HttpRequest req, string FactuurType, ExecutionContext context)
         {
-            WerkbeurtFactuur ThurledeDocument = null;
+            ThurledeFactuur thurledeFactuur;
+
+            ThurledeFactuur ThurledeDocument = null;
             try
             {
                 var serializer = new JsonSerializer();
                 using var sr = new StreamReader(req.Body);
                 var BodyText = await sr.ReadToEndAsync();
 
-                ThurledeDocument = JsonConvert.DeserializeObject<WerkbeurtFactuur>(BodyText);
+                switch (FactuurType)
+                {
+                    case nameof(WachtlijstFactuur):
+                        ThurledeDocument = JsonConvert.DeserializeObject<WachtlijstFactuur>(BodyText);
+                        break;
+
+                    case "WerkbeurtFactuur":
+                        ThurledeDocument = JsonConvert.DeserializeObject<WerkbeurtFactuur>(BodyText);
+                        break;
+
+                    case "ContributieFactuur":
+                        ThurledeDocument = JsonConvert.DeserializeObject<ContributieFactuur>(BodyText);
+                        break;
+
+                    default:
+                        return new BadRequestResult();
+                }
             }
             catch (System.Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }
 
-            ThurledeDocument.DocumentType = nameof(WerkbeurtFactuur);
+            ThurledeDocument.DocumentType = FactuurType;
 
             migraDocService.FontDirectory = Path.Combine(context.FunctionAppDirectory, "Resources");
             var path = await migraDocService.CreateMigraDocPdf(ThurledeDocument);
