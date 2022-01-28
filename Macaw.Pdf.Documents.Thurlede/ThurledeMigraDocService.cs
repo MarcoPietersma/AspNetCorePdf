@@ -84,11 +84,11 @@ namespace Macaw.Pdf
                 p.AddText(
 $@"Het bedrag dient u voor {data.DueDate.ToShortDateString()} over te maken o.v.v. {data.PaymentReference} op onze rekening NL64INGB0000470288 t.n.v. Schiedamse Volkstuinvereniging Thurlede.
 
-U mag zelf bepalen of u in delen of in 1 keer betaald, wel verwachten we het totale bedrag voor 1 juni op onze rekening. Door de uiterste betaaldatum te verlaten naar na het vakantie geld hebben we besloten geen betaalregelingen meer aan te houden.
-
-Wij hopen binnenkort een website te hebben waar u kunt inzien wat de stand is van uw betaling is.
+U mag zelf bepalen of u het bedrag in delen of in 1 keer betaald, wel verwachten we het totale bedrag voor 1 juni op onze rekening.
+Door de uiterste betaaldatum naar 1 juni te zetten zien wij af van andere betaalregelingen.
 
 Met vriendelijke groet
+
 Marco Pietersma
 Penningmeester");
             });

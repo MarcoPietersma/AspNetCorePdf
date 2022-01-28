@@ -90,8 +90,9 @@ namespace Macaw.Pdf
 
             style = document.Styles["Footer"];
             style.ParagraphFormat.TabStops.ClearAll();
-            // style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(80), TabAlignment.Center);
-            style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(158), TabAlignment.Right);
+            style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(10), TabAlignment.Left);
+            style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(100), TabAlignment.Center);
+            style.ParagraphFormat.TabStops.AddTabStop(Unit.FromMillimeter(200), TabAlignment.Center);
         }
 
         private async Task DefineMainContentSection()
@@ -131,11 +132,14 @@ namespace Macaw.Pdf
             var paragraph = MainSection.Footers.Primary.AddParagraph();
 
             paragraph.Style = "Footer";
-            paragraph.AddPageField();
+            paragraph.AddFormattedText("Schiedamse volkstuinvereniging Thurlede", new Font() { Color = Colors.LightGray, Size = "8pt" });
             paragraph.AddTab();
-            paragraph.AddFormattedText("Schiedamse volkstuinvereniging Thurlede", new Font() { Color = Colors.LightGray, Size = "8Pt" });
-            paragraph.AddLineBreak();
-            paragraph.AddFormattedText("https://www.svthurlede.nl", new Font() { Color = Colors.LightGray, Size = "8Pt" });
+            paragraph.AddFormattedText("https://www.svthurlede.nl", new Font() { Color = Colors.LightGray, Size = "8pt" });
+            paragraph.AddTab();
+            paragraph.AddTab();
+            paragraph.AddTab();
+            paragraph.AddText("Pagina : ");
+            var pf = paragraph.AddPageField();
         }
 
         private async Task InjectHeader()
@@ -159,20 +163,20 @@ namespace Macaw.Pdf
             p.AddText("bestuur@svthurlede.nl"); p.AddLineBreak();
 
             p = document.LastSection.AddParagraph();
-            p.Format.SpaceBefore = "1cm";
+            p.Format.SpaceBefore = "0.5cm";
             p.AddText($"{data.Name}"); p.AddLineBreak();
             p.AddText($"{data.Address}"); p.AddLineBreak();
             p.AddText($"{data.PostCode}"); p.AddLineBreak();
             p.AddText($"{data.City}"); p.AddLineBreak();
 
             p = document.LastSection.AddParagraph();
-            p.Format.SpaceBefore = "1cm";
+            p.Format.SpaceBefore = "0,5cm";
             p.AddText($"Datum :{data.InvoiceDate.ToShortDateString()}"); p.AddLineBreak();
             p.AddText($"Referentie : {data.PaymentReference}"); p.AddLineBreak();
             p.AddText($"Betreft : {data.Subject}"); p.AddLineBreak();
 
             p = document.LastSection.AddParagraph();
-            p.Format.SpaceBefore = "1cm";
+            p.Format.SpaceBefore = "0,5cm";
 
             OnInjectBodyText?.Invoke(document, data);
         }
