@@ -38,8 +38,8 @@ namespace Macaw.Pdf
             return stream;
         }
 
-        [FunctionName(FunctionNamePrefix + nameof(WerkbeurtFactuur))]
-        public async Task<IActionResult> WerkbeurtFactuur(
+        [FunctionName(FunctionNamePrefix + nameof(ThurledeFactuur))]
+        public async Task<IActionResult> ThurledeFactuur(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Thurlede/{FactuurType}")] HttpRequest req, string FactuurType, ExecutionContext context)
         {
             ThurledeFactuur thurledeFactuur;

@@ -59,7 +59,7 @@
         private async Task<BlobContainerClient> CreateClient()
         {
             var blobServiceClient = new BlobServiceClient(_configuration["AzureWebJobsStorage"]);
-            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName.ToLower());
             if (!HasBeenChecked)
             {
                 await container.CreateIfNotExistsAsync();
