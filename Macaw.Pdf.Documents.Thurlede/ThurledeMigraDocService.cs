@@ -28,7 +28,7 @@ namespace Macaw.Pdf
                 var data = pdfData as ContributieFactuur;
 
                 var p = document.LastSection.AddParagraph();
-                p.AddText(@"Hierbij doen wij u de rekening toekomen betreffende de ledenbijdrage van uw tuin over het jaar 2022 op ons complex ‘Schiedamse Volkstuinvereniging Thurlede’ zoals onderstaand gespecificeerd.");
+                p.AddText(@$"Hierbij ontvangt u de rekening voor de contributie van dit jaar.");
                 p.AddLineBreak();
                 p.AddLineBreak();
                 var table = document.LastSection.AddTable();
