@@ -15,6 +15,6 @@ namespace Macaw.Pdf.Documents.Thurlede.Model
         public string Name { get; set; }
         public string PaymentReference { get; set; }
         public string PostCode { get; set; }
-        public string Subject { get; internal set; }
+        public string Subject { get; set; }
     }
 }

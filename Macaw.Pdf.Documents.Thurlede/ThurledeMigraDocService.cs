@@ -20,7 +20,6 @@ namespace Macaw.Pdf
         public async Task<Document> CreateContributieFactuur(T pdfData)
         {
             var data = pdfData as ThurledeFactuur;
-            data.Subject = "Contributie 2022";
 
             var constructor = new ThurledeFactuurDocumentConstructor(data, ThurledeStorageRepository);
 
@@ -124,7 +123,6 @@ Penningmeester");
 
             return await constructor.Create((document, dataObj) =>
             {
-                var plural = "en";
                 var data = pdfData as WerkbeurtFactuur;
 
                 var bodyText = $@"
@@ -137,7 +135,7 @@ Deze vergoeding is {data.PrijsPerWerkbeurt:C2} per gemiste werkbeurt.
 
 Daardoor doen we u een rekening toekomen voor de gemiste werktbeurten.
 Graag ontvangen wij van u op onze rekening
-NL64INGB0000470288 t.n.v. Schiedamse volkstuin vereniging Thurlede, een bedrag van { data.AantalWerkbeurtenGemist * data.PrijsPerWerkbeurt:C2}
+NL64INGB0000470288 t.n.v. Schiedamse volkstuin vereniging Thurlede, een bedrag van {data.AantalWerkbeurtenGemist * data.PrijsPerWerkbeurt:C2}
 
 Mocht u het niet eens zijn met deze rekening of mocht de registratie van uw werkbeurten niet kloppen horen wij dat graag van u. U kunt reageren door antwoorden op deze mail.
 Uiteraard zien wij u liever op de werkbeurt als dat wij een rekening na moeten sturen, wij hopen u in het volgende seizoen weer bij de werkbeurten te kunnen verwelkomen.
